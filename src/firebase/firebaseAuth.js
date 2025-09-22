@@ -3,6 +3,7 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
   GoogleAuthProvider,
+  createUserWithEmailAndPassword,
 } from "firebase/auth";
 import { auth } from "./firebaseConfig";
 
@@ -35,4 +36,18 @@ const emailLogin = async (email, password) => {
   }
 };
 
-export { googleLogin, emailLogin };
+const registerUser = async (email, password) => {
+  try {
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+    return userCredential.user;
+  } catch (error) {
+    console.error("Error whilst registering account", error);
+    throw error;
+  }
+};
+
+export { googleLogin, emailLogin, registerUser };
