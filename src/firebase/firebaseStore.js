@@ -10,8 +10,10 @@ import { auth, db } from "./firebaseConfig";
 
 export const addUserToFirestore = async (user) => {
   const role = user.email.endsWith("@evnt5.com") ? "staff" : "user";
+  const displayName = user.displayName || user.email.split("@")[0];
   await setDoc(doc(db, "users", user.uid), {
     email: user.email,
+    name: displayName,
     createdAt: serverTimestamp(),
     role: role,
   });
