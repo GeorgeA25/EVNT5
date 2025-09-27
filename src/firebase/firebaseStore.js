@@ -26,3 +26,19 @@ export const getUserFromFirestore = async (uid) => {
     throw error;
   }
 };
+
+export const addEventsTorFirestore = async (event) => {
+  await setDoc(doc(db, "events", uid), {
+    eventId: event.uid,
+    title: event.title,
+    description: event.description,
+    location: event.location,
+    date: event.date,
+    type: event.type,
+    startTime: event.startTime,
+    endTime: event.endTime,
+    price: event.price,
+    createdBy: event.createdBy,
+    createdAt: serverTimestamp(),
+  });
+};
