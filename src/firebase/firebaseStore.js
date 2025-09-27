@@ -1,4 +1,11 @@
-import { serverTimestamp, setDoc, doc, getDoc } from "firebase/firestore";
+import {
+  serverTimestamp,
+  setDoc,
+  doc,
+  getDoc,
+  collection,
+  getDocs,
+} from "firebase/firestore";
 import { auth, db } from "./firebaseConfig";
 
 export const addUserToFirestore = async (user) => {
@@ -41,4 +48,19 @@ export const addEventsTorFirestore = async (event) => {
     createdBy: event.createdBy,
     createdAt: serverTimestamp(),
   });
+};
+
+export const getEventsFromFirestore = async () => {
+  try {
+    const eventsRef = collection(db, "events");
+    const querySnapshot = await getDocs(eventsRef);
+    const events = querySnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+    return events;
+  } catch (error) {
+    console.error("Error whilst fetching events from Firestore", error);
+    throw error;
+  }
 };
