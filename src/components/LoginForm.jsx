@@ -94,7 +94,7 @@ const LoginForm = () => {
       const user = await emailLogin(staffEmail, staffPassword);
       console.log(user);
       const userRole = await getStaffFromFirestore(user.uid);
-      navigate("/staff-dashbaord");
+      navigate("/staff-dashboard");
     } catch (error) {
       const errorMessage = handleAuthentificationError(error.code);
       setLoginErrorMessage(errorMessage);
