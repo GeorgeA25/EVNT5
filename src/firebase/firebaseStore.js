@@ -5,6 +5,9 @@ import {
   getDoc,
   collection,
   getDocs,
+  addDoc,
+  where,
+  query,
 } from "firebase/firestore";
 import { auth, db } from "./firebaseConfig";
 
@@ -62,15 +65,16 @@ export const getStaffFromFirestore = async (uid) => {
 
 export const addEventsTorFirestore = async (event) => {
   try {
-    if (!event.createdBy) {
-      throw new Error(
-        "Event must have a createdBy property with a valid staff UID"
-      );
+    const currentUser = auth.currentUser;
+    if (!currentUser) {
+      throw new Error("User not authenticated");
     }
-    const staffDocRef = doc(db, "staff", event.createdBy);
-    const eventRef = collection(staffDocRef, "events");
-    await setDoc(eventRef, {
-      eventId: event.uid,
+
+    if (!event.createdBy) {
+      event.createdBy = currentUser.uid;
+    }
+    const eventRef = collection(db, "events");
+    await addDoc(eventRef, {
       title: event.title,
       description: event.description,
       location: event.location,
@@ -100,6 +104,22 @@ export const getEventsFromFirestore = async () => {
     return events;
   } catch (error) {
     console.error("Error whilst fetching events from Firestore", error);
+    throw error;
+  }
+};
+
+export const getEventsByStaffId = async (staffId) => {
+  try {
+    const eventsRef = collection(db, "events");
+    const q = query(eventsRef, where("createdBy", "==", staffId));
+    const querySnapshot = await getDocs(q);
+    const events = querySnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+    return events;
+  } catch (error) {
+    console.error("Error whilst fetching events by staff ID", error);
     throw error;
   }
 };
