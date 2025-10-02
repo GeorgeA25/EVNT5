@@ -1,5 +1,50 @@
+import { useState, useEffect } from "react";
+import { getEventsFromFirestore } from "../firebase/firebaseStore";
+import { useNavigate } from "react-router-dom";
+import EventCard from "../components/EventCard";
+
 const UserEventsPage = () => {
-  return <h1>Welcome</h1>;
+  const [events, setEvents] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchEvents = async () => {
+      setLoading(true);
+      setError(null);
+
+      try {
+        const eventList = await getEventsFromFirestore();
+        setEvents(eventList);
+      } catch (error) {
+        console.error("Error whlilst fetching events", error);
+        setError("Failed to load events onto page");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchEvents();
+  }, []);
+
+  return (
+    <section>
+      <h1>Welcome to Evnt5 Page</h1>
+      {loading && <p>Loading events please wait...</p>}
+      {error && <p>{error}</p>}
+      {!loading && !error && events.length === 0 && (
+        <p>No events avaliable at the moment. PLease check back in later</p>
+      )}
+      {!loading && !error && events.length > 0 && (
+        <div>
+          {events.map((event) => (
+            <EventCard key={event.id} event={event} />
+          ))}
+        </div>
+      )}
+    </section>
+  );
 };
 
 export default UserEventsPage;

@@ -5,6 +5,7 @@ import {
 } from "../firebase/firebaseStore";
 import { auth } from "../firebase/firebaseConfig";
 import { useNavigate } from "react-router-dom";
+import EventCard from "../components/EventCard";
 
 const StaffEventPage = () => {
   const [events, setEvents] = useState([]);
@@ -40,25 +41,24 @@ const StaffEventPage = () => {
     navigate("/create-event");
   };
 
-  const handleEventClick = (eventId) => {
-    navigate(`/events/${eventId}`);
-  };
-
   return (
     <section>
       <h1>Welcome to the Staff Dashbaord</h1>
       <button onClick={handleCreateEvent}>Create New Event</button>
       {loading && <p>Loading evnt5...</p>}
       {error && <p>{error}</p>}
+      {!loading && !error && events.length === 0 && (
+        <p>
+          No events avaliable at the moment. Please create an event to display
+          on your staff dashboard and users events list
+        </p>
+      )}
       {!loading && !error && events.length > 0 && (
-        <ul>
+        <div>
           {events.map((event) => (
-            <li key={event.id} onClick={() => handleEventClick(event.id)}>
-              <h2>Title: {event.title}</h2>
-              <p>Date: {event.date}</p>
-            </li>
+            <EventCard key={event.id} event={event} />
           ))}
-        </ul>
+        </div>
       )}
     </section>
   );
