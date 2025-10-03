@@ -13,7 +13,7 @@ const EventCard = ({ event }) => {
     <div className="event-card" onClick={handleClick}>
       <h3>{event.title}</h3>
       <p>Description: {event.description}</p>
-      <p>Loaction: {event.description}</p>
+      <p>Loaction: {event.location}</p>
       <p>Type: {event.type}</p>
       <p>Date: {event.date}</p>
       <p>Startime: {event.startTime}</p>
