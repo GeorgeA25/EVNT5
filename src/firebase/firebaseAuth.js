@@ -1,9 +1,9 @@
 import {
   getAuth,
   signInWithEmailAndPassword,
-  signInWithPopup,
   GoogleAuthProvider,
   createUserWithEmailAndPassword,
+  signInWithPopup,
 } from "firebase/auth";
 import { auth } from "./firebaseConfig";
 
@@ -11,6 +11,8 @@ const googleLogin = async () => {
   const provider = new GoogleAuthProvider();
   try {
     const outcome = await signInWithPopup(auth, provider);
+    const credential = GoogleAuthProvider.credentialFromResult(outcome);
+    const token = credential.accessToken;
     const user = outcome.user;
     return user;
   } catch (error) {
