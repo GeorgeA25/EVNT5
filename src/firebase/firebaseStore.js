@@ -29,6 +29,37 @@ export const addStaffToFirestore = async (user) => {
   });
 };
 
+export const addGoogleUsersToFirestore = async (user) => {
+  const displayName = user.displayName || user.email.split("@")[0];
+  await setDoc(doc(db, "GoogleUsers", user.uid), {
+    email: user.email,
+    name: displayName,
+    createdAt: serverTimestamp(),
+  });
+};
+
+export const addSignedUpEvents = async (user, eventId) => {
+  try {
+    const currentUser = auth.currentUser;
+    if (!currentUser) {
+      throw new Error("User not authenticated");
+    }
+
+    const displayName = user.displayName || user.email.split("@")[0];
+    const eventRef = collection(db, "eventSignedUp");
+    await addDoc(eventRef, {
+      eventId: eventId,
+      name: displayName,
+      email: user.email,
+      signedUp: serverTimestamp(),
+    });
+    console.log("Event has been signed up to successfully");
+  } catch (error) {
+    console.error("Error whilst adding event signUp to Firestore", error);
+    throw error;
+  }
+};
+
 export const getUserFromFirestore = async (uid) => {
   try {
     const userRef = doc(db, "users", uid);
@@ -59,6 +90,23 @@ export const getStaffFromFirestore = async (uid) => {
     }
   } catch (error) {
     console.error("Error whhilst fetching role", error);
+    throw error;
+  }
+};
+
+export const getGoogleUsersFromFirestore = async (uid) => {
+  try {
+    const userRef = doc(db, "GoogleUsers", uid);
+    const userDoc = await getDoc(userRef);
+
+    if (userDoc.exists()) {
+      const userData = userDoc.data();
+      return userData;
+    } else {
+      return null;
+    }
+  } catch (error) {
+    console.error("Error whilst fetching Google User", error);
     throw error;
   }
 };
@@ -120,6 +168,40 @@ export const getEventsByStaffId = async (staffId) => {
     return events;
   } catch (error) {
     console.error("Error whilst fetching events by staff ID", error);
+    throw error;
+  }
+};
+
+export const getEventsById = async (eventId) => {
+  try {
+    const eventsRef = doc(db, "events", eventId);
+    const eventSnap = await getDoc(eventsRef);
+    if (eventSnap.exists()) {
+      return { id: eventSnap.id, ...eventSnap.data() };
+    } else {
+      throw new Error("Event nt found");
+    }
+  } catch (error) {
+    console.error("Error whilst fetching events by event ID", error);
+    throw error;
+  }
+};
+
+export const getSignedUpEventsByEventId = async (eventId) => {
+  try {
+    const signUpsRef = collection(db, "eventSignedUp");
+    const q = query(signUpsRef, where("eventId", "==", eventId));
+    const querySnapshot = await getDocs(q);
+    const events = querySnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+    return events;
+  } catch (error) {
+    console.error(
+      "Error whilst fetching events that have been signed up to",
+      error
+    );
     throw error;
   }
 };
