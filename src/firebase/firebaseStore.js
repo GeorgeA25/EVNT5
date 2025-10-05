@@ -8,6 +8,7 @@ import {
   addDoc,
   where,
   query,
+  deleteDoc,
 } from "firebase/firestore";
 import { auth, db } from "./firebaseConfig";
 
@@ -203,5 +204,61 @@ export const getSignedUpEventsByEventId = async (eventId) => {
       error
     );
     throw error;
+  }
+};
+
+export const deleteUsersFromFirestore = async (uid) => {
+  try {
+    await deleteDoc(doc(db, "users", uid));
+    await deleteDoc(doc(db, "GoogleUsers", uid));
+    console.log("User data has been deleted from collections");
+    await deleteSignedUpEvents(uid);
+    console.log("User data has been successfully deleted");
+  } catch (error) {
+    console.error("Error whilst deleting user data", error);
+  }
+};
+
+export const deleteStaffFromFirestore = async (uid) => {
+  try {
+    await deleteDoc(doc(db, "staff", uid));
+    console.log("Staff data has been deleted from collections");
+    await deleteEventsCreatedByStaff(uid);
+    console.log("Staff data has been successfully deleted");
+  } catch (error) {
+    console.error("Error whilst deleting staff data", error);
+  }
+};
+
+export const deleteEventsCreatedByStaff = async (uid) => {
+  try {
+    const eventsRef = collection(db, "events");
+    const q = query(eventsRef, where("createdBy", "==", uid));
+    const querySnapshot = await getDocs(q);
+
+    querySnapshot.forEach(async (doc) => {
+      await deleteDoc(doc.ref);
+      console.log(`Event with ID of ${doc.id} has been deleted`);
+    });
+  } catch (error) {
+    console.error(
+      "Error whilst deleting event that's been created by staff",
+      error
+    );
+  }
+};
+
+export const deleteSignedUpEvents = async (uid) => {
+  try {
+    const signedUpEventsRef = collection(db, "eventSignedUp");
+    const q = query(signedUpEventsRef, where("email", "==", uid));
+    const querySnapshot = getDocs(q);
+
+    querySnapshot.forEach(async (doc) => {
+      await deleteDoc(doc.ref);
+      console.log(`Signed-up event with ${doc.id} has been deleted`);
+    });
+  } catch (error) {
+    console.error("Error whilst deleting signed-up events for user", error);
   }
 };
