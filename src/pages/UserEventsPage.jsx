@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { getEventsFromFirestore } from "../firebase/firebaseStore";
 import { useNavigate } from "react-router-dom";
 import EventCard from "../components/EventCard";
+import Navbar from "../components/UserNavbar";
 
 const UserEventsPage = () => {
   const [events, setEvents] = useState([]);
@@ -31,6 +32,8 @@ const UserEventsPage = () => {
   return (
     <section>
       <h1>Welcome to Evnt5 Page</h1>
+      <Navbar />
+      <br />
       {loading && <p>Loading events please wait...</p>}
       {error && <p>{error}</p>}
       {!loading && !error && events.length === 0 && (

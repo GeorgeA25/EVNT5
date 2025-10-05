@@ -6,6 +6,7 @@ import {
 import { auth } from "../firebase/firebaseConfig";
 import { useNavigate } from "react-router-dom";
 import EventCard from "../components/EventCard";
+import StaffNavbar from "../components/StaffNavBar";
 
 const StaffEventPage = () => {
   const [events, setEvents] = useState([]);
@@ -44,6 +45,8 @@ const StaffEventPage = () => {
   return (
     <section>
       <h1>Welcome to the Staff Dashbaord</h1>
+      <StaffNavbar />
+      <br />
       <button onClick={handleCreateEvent}>Create New Event</button>
       {loading && <p>Loading evnt5...</p>}
       {error && <p>{error}</p>}
