@@ -42,7 +42,7 @@ const UserNavbar = () => {
 
     try {
       await deleteUsersFromFirestore(user.uid);
-      await signOut(user);
+      await signOut(auth);
       setDeleteMessage(
         "Account has been deleted. Redirecting to login page..."
       );
