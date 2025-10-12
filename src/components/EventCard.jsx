@@ -1,4 +1,3 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
 import "../css/EventCard.css";
 
@@ -18,7 +17,7 @@ const EventCard = ({ event }) => {
       <p>Date: {event.date}</p>
       <p>Startime: {event.startTime}</p>
       <p>Endtime: {event.endTime}</p>
-      <p>Price: {event.price}</p>
+      <p>Price(£): {event.price}</p>
     </div>
   );
 };
