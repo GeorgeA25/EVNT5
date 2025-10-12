@@ -27,6 +27,9 @@ const UserNavbar = () => {
     }
   };
 
+  const handleGoBackToEvents = () => {
+    navigate("/events");
+  };
   const handleDeleteAccount = async () => {
     const user = auth.currentUser;
     if (!user) {
@@ -67,6 +70,8 @@ const UserNavbar = () => {
             <button onClick={handleLogout}>Log out</button>
             <br />
             <button onClick={handleDeleteAccount}> Delete Account</button>
+            <br />
+            <button onClick={handleGoBackToEvents}>Home Page</button>
           </div>
         )}
       </div>

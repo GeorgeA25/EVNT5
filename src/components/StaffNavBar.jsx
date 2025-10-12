@@ -27,6 +27,10 @@ const StaffNavbar = () => {
     }
   };
 
+  const handleGoBackToStaffPage = () => {
+    navigate("/staff-dashboard");
+  };
+
   const handleDeleteAccount = async () => {
     const staff = auth.currentUser;
     if (!staff) {
@@ -67,6 +71,8 @@ const StaffNavbar = () => {
             <button onClick={handleLogout}>Log out</button>
             <br />
             <button onClick={handleDeleteAccount}> Delete Account</button>
+            <br />
+            <button onClick={handleGoBackToStaffPage}>Home Page</button>
           </div>
         )}
       </div>
