@@ -30,13 +30,58 @@ export const addStaffToFirestore = async (user) => {
   });
 };
 
-export const addGoogleUsersToFirestore = async (user) => {
+export const addGoogleUsersToFirestore = async (user, idToken, accessToken) => {
   const displayName = user.displayName || user.email.split("@")[0];
   await setDoc(doc(db, "GoogleUsers", user.uid), {
     email: user.email,
     name: displayName,
     createdAt: serverTimestamp(),
+    idToken: idToken || null,
+    accessToken: accessToken || null,
   });
+};
+
+export const addGoogleRefreshTokenToFirestore = async (uid, refreshToken) => {
+  if (!refreshToken) return;
+
+  try {
+    await setDoc(
+      doc(db, "user_tokens", uid),
+      {
+        refreshToken,
+        updatedAt: serverTimestamp(),
+      },
+      { merge: true }
+    );
+    console.log("Refresh token saved for user", uid);
+  } catch (error) {
+    console.error("error saving refresh token", error);
+  }
+};
+
+export const addGoogleApiRefreshTokenToFirestore = async (uid, tokenData) => {
+  if (!tokenData?.refresh_token) {
+    console.error("missing google calendar refresh token");
+    return;
+  }
+
+  try {
+    await setDoc(
+      doc(db, "google_calendar_tokens", uid),
+      {
+        refresh_token: tokenData.refresh_token,
+        access_token: tokenData.access_token,
+        scope: tokenData.scope,
+        token_type: tokenData.token_type,
+        expiry_date: tokenData.expiry_date,
+        updatedAt: serverTimestamp(),
+      },
+      { merge: true }
+    );
+    console.log("google calendar token stored for user", uid);
+  } catch (error) {
+    console.error("error saving google calendar token", error);
+  }
 };
 
 export const addSignedUpEvents = async (user, eventId) => {
@@ -214,6 +259,8 @@ export const deleteUsersFromFirestore = async (uid) => {
     console.log("User data has been deleted from collections");
     await deleteSignedUpEvents(uid);
     console.log("User data has been successfully deleted");
+    await deleteDoc(doc(db, "google_calendar_tokens", uid));
+    await deleteDoc(doc(db, "user_tokens", uid));
   } catch (error) {
     console.error("Error whilst deleting user data", error);
   }
@@ -252,8 +299,7 @@ export const deleteSignedUpEvents = async (uid) => {
   try {
     const signedUpEventsRef = collection(db, "eventSignedUp");
     const q = query(signedUpEventsRef, where("email", "==", uid));
-    const querySnapshot = getDocs(q);
-
+    const querySnapshot = await getDocs(q);
     querySnapshot.forEach(async (doc) => {
       await deleteDoc(doc.ref);
       console.log(`Signed-up event with ${doc.id} has been deleted`);
