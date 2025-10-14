@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   emailLogin,
@@ -10,6 +10,8 @@ import {
   addStaffToFirestore,
   getUserFromFirestore,
   getStaffFromFirestore,
+  addGoogleUsersToFirestore,
+  getGoogleUsersFromFirestore,
 } from "../firebase/firebaseStore";
 
 const LoginForm = () => {
@@ -33,6 +35,8 @@ const LoginForm = () => {
 
   const [userFormErrorMessage, setUserFormErrorMessage] = useState("");
   const [staffFormErrorMessage, setStaffFormErrorMessage] = useState("");
+
+  const [isUserLoggingIn, setIsUserLoggingIn] = useState(false);
 
   const navigate = useNavigate();
 
@@ -59,23 +63,33 @@ const LoginForm = () => {
     e.preventDefault();
     setLoginLoadingMessage(true);
     setLoginErrorMessage(null);
+    setIsUserLoggingIn(true);
 
     try {
       if (staffEmail || staffPassword) {
         setUserFormErrorMessage(
           "Staff login/Registering is not allowed in these fields. Please use the staff login/registering"
         );
+        setTimeout(() => {
+          setUserFormErrorMessage(null);
+        }, 4000);
         return;
       }
       const user = await emailLogin(userEmail, userPassword);
       console.log(user);
-      const userRole = await getUserFromFirestore(user.uid);
-      navigate("/user-dashboard");
+      await getUserFromFirestore(user.uid);
+      setUserEmail("");
+      setUserPassword("");
+      navigate("/events");
     } catch (error) {
       const errorMessage = handleAuthentificationError(error.code);
       setLoginErrorMessage(errorMessage);
+      setTimeout(() => {
+        setLoginErrorMessage(null);
+      }, 4000);
     } finally {
       setLoginLoadingMessage(false);
+      setIsUserLoggingIn(false);
     }
   };
 
@@ -83,49 +97,62 @@ const LoginForm = () => {
     e.preventDefault();
     setLoginLoadingMessage(true);
     setLoginErrorMessage(null);
+    setIsUserLoggingIn(true);
 
     try {
       if (userEmail || userPassword) {
         setStaffFormErrorMessage(
           "User login/Registering is not allowed in these fields. Please use the user login/registering"
         );
+        setTimeout(() => {
+          setStaffFormErrorMessage(null);
+        }, 4000);
         return;
       }
       const user = await emailLogin(staffEmail, staffPassword);
       console.log(user);
-      const userRole = await getStaffFromFirestore(user.uid);
+      await getStaffFromFirestore(user.uid);
+      setStaffEmail("");
+      setStaffPassword("");
       navigate("/staff-dashboard");
     } catch (error) {
       const errorMessage = handleAuthentificationError(error.code);
       setLoginErrorMessage(errorMessage);
+      setTimeout(() => {
+        setLoginErrorMessage(null);
+      }, 4000);
     } finally {
       setLoginLoadingMessage(false);
+      setIsUserLoggingIn(false);
     }
   };
 
   const handleGoogleLogin = async () => {
+    if (isUserLoggingIn) return;
     setGoogleLoginLoading(true);
     setLoginErrorMessage(null);
+    setIsUserLoggingIn(true);
 
     try {
-      const user = await googleLogin();
-      console.log(user);
-      const userRole = await getUserFromFirestore(user.uid);
+      const outcome = await googleLogin();
+      const user = outcome.user;
+      const existingUser = await getGoogleUsersFromFirestore(user.uid);
 
-      if (!userRole) {
-        await addUserToFirestore({
-          uid: user.uid,
-          email: user.email,
-          role: "user",
-        });
+      if (!existingUser) {
+        await addGoogleUsersToFirestore(
+          user,
+          outcome.__tokenResponse.idToken,
+          outcome.__tokenResponse.accessToken
+        );
       }
-
-      navigate("/user-dashboard");
+      navigate(
+        user.email.includes("@evnt5.com") ? "/staff-dashboard" : "/events"
+      );
     } catch (error) {
-      const errorMessage = handleAuthentificationError(error.code);
-      setLoginErrorMessage(errorMessage);
+      setLoginErrorMessage(error.message || "error signing in via google");
     } finally {
       setGoogleLoginLoading(false);
+      setIsUserLoggingIn(false);
     }
   };
 
@@ -140,6 +167,9 @@ const LoginForm = () => {
         setUserFormErrorMessage(
           "Staff registration is not allowed here. Please use the staff registration form"
         );
+        setTimeout(() => {
+          setUserFormErrorMessage(null);
+        }, 4000);
         return;
       }
       const user = await registerUser(userRegisterEmail, userRegisterPassword);
@@ -148,11 +178,16 @@ const LoginForm = () => {
         uid: user.uid,
         email: userRegisterEmail,
       });
-      navigate("/user-dashboard");
+      navigate("/events");
+      setUserEmail("");
+      setUserPassword("");
     } catch (error) {
       console.error(error);
       const errorMessage = handleAuthentificationError(error.code);
       setRegisterErrorMessage(errorMessage);
+      setTimeout(() => {
+        setRegisterErrorMessage(null);
+      }, 4000);
     } finally {
       setRegisterLoadingMessage(false);
       setRegistering(false);
@@ -170,6 +205,9 @@ const LoginForm = () => {
         setStaffFormErrorMessage(
           "User registration is not allowed here. Please use the user registration form"
         );
+        setTimeout(() => {
+          setStaffFormErrorMessage(null);
+        }, 4000);
         return;
       }
       const user = await registerUser(
@@ -182,10 +220,15 @@ const LoginForm = () => {
         email: staffRegisterEmail,
       });
       navigate("/staff-dashboard");
+      setStaffRegisterEmail("");
+      setStaffRegisterPassword("");
     } catch (error) {
       console.error(error);
       const errorMessage = handleAuthentificationError(error.code);
       setRegisterErrorMessage(errorMessage);
+      setTimeout(() => {
+        setRegisterErrorMessage(null);
+      }, 4000);
     } finally {
       setRegisterLoadingMessage(false);
       setRegistering(false);
@@ -196,40 +239,60 @@ const LoginForm = () => {
     <section>
       <h1> User Login/Register</h1>
       {loginLoadingMessage && (
-        <p> Loading login/registration page, please wait...</p>
+        <p aria-live="polite">
+          {" "}
+          Loading login/registration page, please wait...
+        </p>
       )}
-      {loginErrorMessage && <p>{loginErrorMessage}</p>}
+      {loginErrorMessage && (
+        <p id="userLoginError" role="alert">
+          {loginErrorMessage}
+        </p>
+      )}
 
-      <form onSubmit={handleUserEmailLogin}>
-        <label htmlFor="email">Email</label>
+      <form onSubmit={handleUserEmailLogin} aria-busy={loginLoadingMessage}>
+        <label htmlFor="user-email">Email:</label>
         <input
           type="email"
-          id="email"
+          id="user-email"
           placeholder="Please enter your email"
           value={userEmail}
           onChange={(e) => setUserEmail(e.target.value)}
           required
+          aria-required="true"
         />
-        <label htmlFor="password">Password</label>
+        <label htmlFor="user-password">Password:</label>
         <input
           type="password"
-          id="password"
+          id="user-password"
           placeholder="Please enter your password"
           value={userPassword}
           onChange={(e) => setUserPassword(e.target.value)}
           required
           minLength={6}
+          aria-required="true"
         />
 
         <button type="submit" disabled={loginLoadingMessage}>
           {registering ? "Logging in..." : "Login"}
         </button>
       </form>
-      {registerLoadingMessage && <p>loading, please wait...</p>}
-      {registerErrorMessage && <p>{registerErrorMessage}</p>}
-      {userFormErrorMessage && <p>{userFormErrorMessage}</p>}
+      <br />
+      {registerLoadingMessage && (
+        <p aria-live="polite">loading, please wait...</p>
+      )}
+      {registerErrorMessage && (
+        <p id="userRegisterError" role="alert">
+          {registerErrorMessage}
+        </p>
+      )}
+      {userFormErrorMessage && (
+        <p id="userFormError" role="alert">
+          {userFormErrorMessage}
+        </p>
+      )}
       <form onSubmit={handleUserRegister}>
-        <label htmlFor="email-register">Email</label>
+        <label htmlFor="email-register">Email:</label>
         <input
           type="email"
           id="user-email-register"
@@ -237,8 +300,9 @@ const LoginForm = () => {
           value={userRegisterEmail}
           onChange={(e) => setUserRegisterEmail(e.target.value)}
           disabled={registering}
+          aria-required="true"
         />
-        <label htmlFor="password-register"></label>
+        <label htmlFor="password-register">Password:</label>
         <input
           type="password"
           id="user-password-register"
@@ -248,6 +312,7 @@ const LoginForm = () => {
           required
           minLength={6}
           disabled={registering}
+          aria-required="true"
         />
         <button type="submit" disabled={registerLoadingMessage || registering}>
           {registering ? "Registering..." : "Register"}
@@ -255,40 +320,67 @@ const LoginForm = () => {
       </form>
       <h1> Staff Login/Register</h1>
       {loginLoadingMessage && (
-        <p> Loading login/registration page, please wait...</p>
+        <p aria-live="polite">
+          {" "}
+          Loading login/registration page, please wait...
+        </p>
       )}
-      {loginErrorMessage && <p>{loginErrorMessage}</p>}
+      {loginErrorMessage && (
+        <p id="staffLoginError" role="alert">
+          {loginErrorMessage}
+        </p>
+      )}
 
-      <form onSubmit={handleStaffEmailLogin}>
-        <label htmlFor="email">Email</label>
+      <form
+        onSubmit={handleStaffEmailLogin}
+        aria-describedby="staffLoginError"
+        aria-busy={loginLoadingMessage}
+      >
+        <label htmlFor="staff-email">Email:</label>
         <input
           type="email"
-          id="email"
+          id="staff-email"
           placeholder="Please enter your email"
           value={staffEmail}
           onChange={(e) => setStaffEmail(e.target.value)}
           required
+          aria-required="true"
         />
-        <label htmlFor="password">Password</label>
+        <label htmlFor="staff-password">Password:</label>
         <input
           type="password"
-          id="password"
+          id="staff-password"
           placeholder="Please enter your password"
           value={staffPassword}
           onChange={(e) => setStaffPassword(e.target.value)}
           required
           minLength={6}
+          aria-required="true"
         />
 
         <button type="submit" disabled={loginLoadingMessage}>
           {registering ? "Logging in..." : "Login"}
         </button>
       </form>
-      {registerLoadingMessage && <p>loading, please wait...</p>}
-      {registerErrorMessage && <p>{registerErrorMessage}</p>}
-      {staffFormErrorMessage && <p>{staffFormErrorMessage}</p>}
-      <form onSubmit={handleStaffRegister}>
-        <label htmlFor="email-register">Email</label>
+      <br />
+      {registerLoadingMessage && (
+        <p aria-live="polite">loading, please wait...</p>
+      )}
+      {registerErrorMessage && (
+        <p id="staffRegisterError" role="alert">
+          {registerErrorMessage}
+        </p>
+      )}
+      {staffFormErrorMessage && (
+        <p id="staffFormError" role="alert">
+          {staffFormErrorMessage}
+        </p>
+      )}
+      <form
+        onSubmit={handleStaffRegister}
+        aria-describedby="staffRegisterError staffFormError"
+      >
+        <label htmlFor="email-register">Email:</label>
         <input
           type="email"
           id="staff-mail-register"
@@ -296,8 +388,9 @@ const LoginForm = () => {
           value={staffRegisterEmail}
           onChange={(e) => setStaffRegisterEmail(e.target.value)}
           disabled={registering}
+          aria-required="true"
         />
-        <label htmlFor="password-register">Password</label>
+        <label htmlFor="password-register">Password:</label>
         <input
           type="password"
           id="staff-password-register"
@@ -307,6 +400,7 @@ const LoginForm = () => {
           required
           minLength={6}
           disabled={registering}
+          aria-required="true"
         />
         <button type="submit" disabled={registerLoadingMessage || registering}>
           {registering ? "Registering..." : "Register"}
