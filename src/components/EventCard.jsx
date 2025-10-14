@@ -1,11 +1,13 @@
 import { useNavigate } from "react-router-dom";
 import "../css/EventCard.css";
 
-const EventCard = ({ event }) => {
+const EventCard = ({ event, clickable = true, basePath = "/events" }) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate(`/events/${event.id}`);
+    if (clickable) {
+      return navigate(`${basePath}/${event.id}`);
+    }
   };
 
   return (
