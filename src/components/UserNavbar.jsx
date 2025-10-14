@@ -4,7 +4,7 @@ import { signOut } from "firebase/auth";
 import { auth } from "../firebase/firebaseConfig";
 import { deleteUsersFromFirestore } from "../firebase/firebaseStore";
 
-const UserNavbar = () => {
+const UserNavbar = ({ clickable = true }) => {
   const [isDroppedDown, setIsDroppedDown] = useState(false);
   const [logOutMessage, setLogOutMessage] = useState("");
   const [deleteMessage, setDeleteMessage] = useState("");
@@ -12,6 +12,7 @@ const UserNavbar = () => {
   const navigate = useNavigate();
 
   const handleLogout = async () => {
+    if (!clickable) return;
     setIsDroppedDown(true);
     try {
       await signOut(auth);
@@ -28,9 +29,11 @@ const UserNavbar = () => {
   };
 
   const handleGoBackToEvents = () => {
+    if (!clickable) return;
     navigate("/events");
   };
   const handleDeleteAccount = async () => {
+    if (!clickable) return;
     const user = auth.currentUser;
     if (!user) {
       console.error("No user is currently logged in");
@@ -62,7 +65,7 @@ const UserNavbar = () => {
   return (
     <nav>
       <div>
-        <button onClick={() => setIsDroppedDown(!isDroppedDown)}>
+        <button onClick={() => clickable && setIsDroppedDown(!isDroppedDown)}>
           Profile
         </button>
         {isDroppedDown && (
