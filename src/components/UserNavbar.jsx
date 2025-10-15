@@ -4,7 +4,7 @@ import { signOut } from "firebase/auth";
 import { auth } from "../firebase/firebaseConfig";
 import { deleteUsersFromFirestore } from "../firebase/firebaseStore";
 
-const UserNavbar = () => {
+const UserNavbar = ({ onLoggingOut }) => {
   const [isDroppedDown, setIsDroppedDown] = useState(false);
   const [logOutMessage, setLogOutMessage] = useState("");
   const [deleteMessage, setDeleteMessage] = useState("");
@@ -14,6 +14,9 @@ const UserNavbar = () => {
   const handleLogout = async () => {
     setIsDroppedDown(true);
     try {
+      if (onLoggingOut) {
+        onLoggingOut();
+      }
       await signOut(auth);
 
       setIsDroppedDown(false);
