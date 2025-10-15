@@ -9,6 +9,7 @@ import {
   where,
   query,
   deleteDoc,
+  updateDoc,
 } from "firebase/firestore";
 import { auth, db } from "./firebaseConfig";
 
@@ -179,6 +180,7 @@ export const addEventsTorFirestore = async (event) => {
       price: event.price,
       createdBy: event.createdBy,
       createdAt: serverTimestamp(),
+      public: true,
     });
     console.log("Event added successfully");
   } catch (error) {
@@ -295,6 +297,17 @@ export const deleteEventsCreatedByStaff = async (uid) => {
   }
 };
 
+export const deleteEventsById = async (eventId) => {
+  try {
+    const eventRef = doc(db, "events", eventId);
+    await deleteDoc(eventRef);
+    console.log(`Event with ID ${eventId} has been deleted`);
+  } catch (error) {
+    console.error("Error whilst deleting event by ID", error);
+    throw error;
+  }
+};
+
 export const deleteSignedUpEvents = async (uid) => {
   try {
     const signedUpEventsRef = collection(db, "eventSignedUp");
@@ -306,5 +319,16 @@ export const deleteSignedUpEvents = async (uid) => {
     });
   } catch (error) {
     console.error("Error whilst deleting signed-up events for user", error);
+  }
+};
+
+export const updateEventById = async (eventId, updatedData) => {
+  try {
+    const eventRef = doc(db, "events", eventId);
+    await updateDoc(eventRef, updatedData);
+    console.log("Event updated successfully");
+  } catch (error) {
+    console.error("Error whilst updating event", error);
+    throw error;
   }
 };
