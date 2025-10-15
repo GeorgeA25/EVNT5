@@ -59,7 +59,12 @@ const StaffEventPage = () => {
       {!loading && !error && events.length > 0 && (
         <div>
           {events.map((event) => (
-            <EventCard key={event.id} event={event} />
+            <EventCard
+              key={event.id}
+              event={event}
+              clickable={true}
+              basePath="/staff-events"
+            />
           ))}
         </div>
       )}
