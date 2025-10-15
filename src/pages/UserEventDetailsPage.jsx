@@ -10,6 +10,7 @@ import EventCard from "../components/EventCard";
 import { combineDateAndTime } from "../utils/convertDateAndTime";
 import { getAuth } from "firebase/auth";
 import UserNavbar from "../components/UserNavbar";
+import sendConfirmationEmail from "../utils/confirmationEmail";
 
 const UserEventDetailsPage = () => {
   const { eventId } = useParams();
@@ -104,9 +105,22 @@ const UserEventDetailsPage = () => {
         email: email || currentUser.email,
       };
       await addSignedUpEvents(user, eventId);
-      setMessage("You have successfully signed up to the event see you there!");
+      setMessage(
+        "You have successfully signed up to the event see you there!. A confirmation email has been sent."
+      );
       setName("");
       setEmail("");
+
+      await sendConfirmationEmail({
+        toEmail: user.email,
+        name: user.name,
+        title: eventDetails.title,
+        date: eventDetails.date,
+        location: eventDetails.location,
+        startTime: eventDetails.startTime,
+        endTime: eventDetails.endTime,
+        time: new Date().toLocaleString(),
+      });
 
       const updatedSignUps = await getSignedUpEventsByEventId(eventId);
       console.log(updatedSignUps);
