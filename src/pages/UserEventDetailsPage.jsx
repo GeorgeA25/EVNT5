@@ -11,6 +11,7 @@ import { combineDateAndTime } from "../utils/convertDateAndTime";
 import { getAuth } from "firebase/auth";
 import UserNavbar from "../components/UserNavbar";
 import sendConfirmationEmail from "../utils/confirmationEmail";
+import { useNavigate } from "react-router-dom";
 
 const UserEventDetailsPage = () => {
   const { eventId } = useParams();
@@ -31,6 +32,7 @@ const UserEventDetailsPage = () => {
   const googleUser = currentUser?.providerData.some(
     (provider) => provider.providerId === "google.com"
   );
+  const navigate = useNavigate();
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((firebaseUser) => {
@@ -100,6 +102,14 @@ const UserEventDetailsPage = () => {
       return;
     }
     try {
+      if (eventDetails.price > 0) {
+        navigate("/payment", {
+          state: { eventDetails, name, email },
+        });
+        setLoadingSignUp(false);
+        return;
+      }
+
       const user = {
         name: name || currentUser.displayName,
         email: email || currentUser.email,
