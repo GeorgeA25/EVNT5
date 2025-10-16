@@ -107,6 +107,28 @@ export const addSignedUpEvents = async (user, eventId) => {
   }
 };
 
+export const addPaymentInfoToFirestore = async (
+  uid,
+  eventId,
+  paymentIntent
+) => {
+  try {
+    const paymentRef = doc(db, "payments", `${uid}_${eventId}`);
+    await setDoc(paymentRef, {
+      uid,
+      eventId,
+      paymentId: paymentIntent.id,
+      amount: paymentIntent.amount,
+      currency: paymentIntent.currency,
+      status: paymentIntent.status,
+      createdAt: serverTimestamp(),
+    });
+  } catch (error) {
+    console.error("Error saving payment info to Firestore", error);
+    throw error;
+  }
+};
+
 export const getUserFromFirestore = async (uid) => {
   try {
     const userRef = doc(db, "users", uid);
@@ -177,7 +199,7 @@ export const addEventsTorFirestore = async (event) => {
       type: event.type,
       startTime: event.startTime,
       endTime: event.endTime,
-      price: event.price,
+      price: Number(event.price) || 0,
       createdBy: event.createdBy,
       createdAt: serverTimestamp(),
       public: true,
