@@ -4,6 +4,7 @@ import logger from "firebase-functions/logger";
 import { defineSecret } from "firebase-functions/params";
 import admin from "firebase-admin";
 import cors from "cors";
+import Stripe from "stripe";
 
 const GOOGLE_CLIENT_ID = defineSecret("GOOGLE_CLIENT_ID");
 const GOOGLE_CLIENT_SECRET = defineSecret("GOOGLE_CLIENT_SECRET");
@@ -200,5 +201,32 @@ export const exchangeGoogleCode = onRequest(
         return res.status(500).json({ success: false, error: error.message });
       }
     });
+  }
+);
+
+const stripeSecret = defineSecret("stripe_secret");
+
+export const createPaymentIntent = onRequest(
+  { region: "europe-west2", secrets: [stripeSecret] },
+  async (req, res) => {
+    try {
+      const { amount, currency } = req.body;
+
+      if (!amount || !currency) {
+        res.status(400).send({ error: "Amount and currency are required" });
+        return;
+      }
+      const stripe = new Stripe(await stripeSecret.value());
+
+      const paymentIntent = await stripe.paymentIntents.create({
+        amount,
+        currency,
+        automatic_payment_methods: { enabled: true },
+      });
+      res.status(200).send({ clientSecret: paymentIntent.client_secret });
+    } catch (error) {
+      console.error("Stripe error", error);
+      res.status(500).send({ error: error.message });
+    }
   }
 );
