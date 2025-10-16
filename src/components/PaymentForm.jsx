@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 
-const PaymentForm = ({ amountPence, currency = "gbp", onPaymentSuccess }) => {
+const PaymentForm = ({ amountPounds, currency = "gbp", onPaymentSuccess }) => {
   const stripe = useStripe();
   const elements = useElements();
   const [loading, setLoading] = useState(false);
@@ -16,8 +16,10 @@ const PaymentForm = ({ amountPence, currency = "gbp", onPaymentSuccess }) => {
     setError(null);
 
     try {
+      const amountPence = Math.round(amountPounds * 100);
+
       const response = await fetch(
-        "https://createpaymentintent-o53weyim5q-nw.a.run.app",
+        "https://createpaymentintent-o53weyim5q-nw.a.run.app/",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
