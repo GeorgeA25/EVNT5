@@ -209,24 +209,35 @@ const stripeSecret = defineSecret("stripe_secret");
 export const createPaymentIntent = onRequest(
   { region: "europe-west2", secrets: [stripeSecret] },
   async (req, res) => {
-    try {
-      const { amount, currency } = req.body;
-
-      if (!amount || !currency) {
-        res.status(400).send({ error: "Amount and currency are required" });
-        return;
-      }
-      const stripe = new Stripe(await stripeSecret.value());
-
-      const paymentIntent = await stripe.paymentIntents.create({
-        amount,
-        currency,
-        automatic_payment_methods: { enabled: true },
-      });
-      res.status(200).send({ clientSecret: paymentIntent.client_secret });
-    } catch (error) {
-      console.error("Stripe error", error);
-      res.status(500).send({ error: error.message });
+    if (req.method === "OPTIONS") {
+      res.setHeader("Access-Control-Allow-Origin", "*");
+      res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
+      res.setHeader(
+        "Access-Control-Allow-Headers",
+        "Content-Type, Authorization"
+      );
+      return res.status(200).send();
     }
+    corsHandler(req, res, async () => {
+      try {
+        const { amount, currency } = req.body;
+
+        if (!amount || !currency) {
+          res.status(400).send({ error: "Amount and currency are required" });
+          return;
+        }
+        const stripe = new Stripe(await stripeSecret.value());
+
+        const paymentIntent = await stripe.paymentIntents.create({
+          amount,
+          currency,
+          automatic_payment_methods: { enabled: true },
+        });
+        res.status(200).send({ clientSecret: paymentIntent.client_secret });
+      } catch (error) {
+        console.error("Stripe error", error);
+        res.status(500).send({ error: error.message });
+      }
+    });
   }
 );
