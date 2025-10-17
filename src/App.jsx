@@ -14,6 +14,7 @@ import OAuth2Callback from "./components/oauth2callback";
 import { ToastContainer } from "react-toastify";
 import NotFoundPage from "./pages/NotFound";
 import StaffEventDetailsPage from "./pages/StaffEventDetailsPage";
+import PaymentPage from "./pages/PaymentPage";
 
 function App() {
   const navigate = useNavigate();
@@ -57,6 +58,7 @@ function App() {
         />
         <Route path="/oauth2callback" element={<OAuth2Callback />} />
         <Route path="/*" element={<NotFoundPage />} />
+        <Route path="/payment" element={<PaymentPage />} />
       </Routes>
       <ToastContainer position="top-center" autoClose={4000} />
     </>
