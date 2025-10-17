@@ -6,6 +6,7 @@ import {
 } from "../firebase/firebaseStore";
 import EventCard from "../components/EventCard";
 import UserNavbar from "../components/UserNavbar";
+import Footer from "../components/Footer";
 
 const MyEventsPage = () => {
   const [events, setEvents] = useState([]);
@@ -55,6 +56,7 @@ const MyEventsPage = () => {
           <EventCard key={event.id} event={event} clickable={false} />
         ))}
       </div>
+      <Footer />
     </>
   );
 };

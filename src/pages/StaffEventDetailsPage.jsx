@@ -8,6 +8,7 @@ import {
 import { useNavigate, useParams } from "react-router-dom";
 import EventCard from "../components/EventCard";
 import StaffNavbar from "../components/StaffNavBar";
+import Footer from "../components/Footer";
 
 const StaffEventDetailPage = () => {
   const [draftEvent, setDraftEvent] = useState({});
@@ -231,6 +232,7 @@ const StaffEventDetailPage = () => {
           {message && <p aria-live="polite">{message}</p>}
         </>
       )}
+      <Footer />
     </section>
   );
 };

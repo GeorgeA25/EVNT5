@@ -3,6 +3,7 @@ import { getEventsFromFirestore } from "../firebase/firebaseStore";
 import { useNavigate } from "react-router-dom";
 import EventCard from "../components/EventCard";
 import UserNavbar from "../components/UserNavbar";
+import Footer from "../components/Footer";
 
 const UserEventsPage = () => {
   const [events, setEvents] = useState([]);
@@ -44,6 +45,7 @@ const UserEventsPage = () => {
           ))}
         </div>
       )}
+      <Footer />
     </section>
   );
 };

@@ -7,6 +7,7 @@ import { auth } from "../firebase/firebaseConfig";
 import { useNavigate } from "react-router-dom";
 import EventCard from "../components/EventCard";
 import StaffNavbar from "../components/StaffNavBar";
+import Footer from "../components/Footer";
 
 const StaffEventPage = () => {
   const [events, setEvents] = useState([]);
@@ -68,6 +69,7 @@ const StaffEventPage = () => {
           ))}
         </div>
       )}
+      <Footer />
     </section>
   );
 };

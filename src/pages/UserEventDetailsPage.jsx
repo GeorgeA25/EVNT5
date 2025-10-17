@@ -12,6 +12,7 @@ import { getAuth } from "firebase/auth";
 import UserNavbar from "../components/UserNavbar";
 import sendConfirmationEmail from "../utils/confirmationEmail";
 import { useNavigate } from "react-router-dom";
+import Footer from "../components/Footer";
 
 const UserEventDetailsPage = () => {
   const { eventId } = useParams();
@@ -391,6 +392,7 @@ const UserEventDetailsPage = () => {
           </div>
         </>
       )}
+      <Footer />
     </>
   );
 };
