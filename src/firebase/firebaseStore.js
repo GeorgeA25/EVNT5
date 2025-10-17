@@ -276,6 +276,27 @@ export const getSignedUpEventsByEventId = async (eventId) => {
   }
 };
 
+export const getSignedUpEventsByUserEmail = async (email) => {
+  try {
+    const q = query(
+      collection(db, "eventSignedUp"),
+      where("email", "==", email)
+    );
+    const querySnapshot = await getDocs(q);
+    const signUps = [];
+    querySnapshot.forEach((doc) => {
+      signUps.push({ id: doc.id, ...doc.data() });
+    });
+    return signUps;
+  } catch (error) {
+    console.error(
+      "Error whilst fetching events signed up to by user email",
+      error
+    );
+    throw error;
+  }
+};
+
 export const deleteUsersFromFirestore = async (uid) => {
   try {
     await deleteDoc(doc(db, "users", uid));
