@@ -20,6 +20,9 @@ const UserEventDetailsPage = () => {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [loadingSignUp, setLoadingSignUp] = useState(false);
+  const [loadingConnect, setLoadingConnect] = useState(false);
+  const [loadingAddEvent, setLoadingAddEvent] = useState(false);
+  const [eventAdded, setEventAdded] = useState(false);
   const [error, setError] = useState(null);
   const [message, setMessage] = useState("");
   const [signUpsList, setSignUpList] = useState([]);
@@ -82,8 +85,12 @@ const UserEventDetailsPage = () => {
 
   useEffect(() => {
     const connected = localStorage.getItem("googleCalendarConnected");
+    const added = localStorage.getItem(`eventAdded_${eventId}`);
     if (connected === "true") {
       setCalendarConnected(true);
+    }
+    if (added === "true") {
+      setEventAdded(true);
     }
   }, []);
 
@@ -159,6 +166,9 @@ const UserEventDetailsPage = () => {
       setError("you must be logged in to add events to google calendar");
       return;
     }
+
+    setLoadingAddEvent(true);
+    setError(null);
     const eventData = {
       title: eventDetails.title,
       description: eventDetails.description,
@@ -191,12 +201,13 @@ const UserEventDetailsPage = () => {
           outcome.error || "failed to add event to google calendar"
         );
       }
-      setMessage("Event successfuly added to you google calendar");
+      setEventAdded(true);
+      localStorage.setItem(`eventAdded_${eventId}`, "true");
+      setMessage("Event successfuly added to your google calendar");
     } catch (error) {
       setError(error.message);
     }
   };
-
   const handleConnectGoogleCalendar = async () => {
     const auth = getAuth();
     const user = auth.currentUser;
@@ -204,8 +215,9 @@ const UserEventDetailsPage = () => {
       setError("you need to be logged in to connect to google calendar");
       return;
     }
+    setLoadingConnect(true);
     localStorage.setItem("pendingEventId", eventId);
-    setTimeout(() => {
+    try {
       const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
       const redirectUri = "http://localhost:5173/oauth2callback";
       const scope = "https://www.googleapis.com/auth/calendar";
@@ -213,8 +225,14 @@ const UserEventDetailsPage = () => {
       const oauth2Url = `https://accounts.google.com/o/oauth2/v2/auth?response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}&scope=${encodeURIComponent(
         scope
       )}&access_type=offline&prompt=consent&state=${state}`;
-      window.location.href = oauth2Url;
-    }, 1500);
+      setTimeout(() => {
+        window.location.href = oauth2Url;
+      }, 2000);
+    } catch (error) {
+      setError("Failed to connect Google Calendar");
+    } finally {
+      setLoadingConnect(false);
+    }
   };
 
   const userSignedUp = signUpsList.some(
@@ -281,8 +299,12 @@ const UserEventDetailsPage = () => {
               placeholder="Please enter your email"
               required
             ></input>
-            <button type="submit" disabled={loadingSignUp}>
-              {loadingSignUp ? "Signing Up..." : "Sign Up"}
+            <button type="submit" disabled={loadingSignUp || userSignedUp}>
+              {userSignedUp
+                ? "Already signed up"
+                : loadingSignUp
+                ? "Signing Up..."
+                : "Sign Up"}
             </button>
           </form>
 
@@ -308,9 +330,15 @@ const UserEventDetailsPage = () => {
                 )}
                 <button
                   onClick={handleConnectGoogleCalendar}
-                  disabled={!userSignedUp}
+                  disabled={
+                    !userSignedUp || !loadingConnect || calendarConnected
+                  }
                 >
-                  Connect Google Calendar
+                  {loadingConnect
+                    ? "Connecting"
+                    : calendarConnected
+                    ? "Connected to Google Calendar"
+                    : "Connect Google Calendar"}
                 </button>
                 {!calendarConnected && (
                   <p
@@ -324,9 +352,18 @@ const UserEventDetailsPage = () => {
                 )}
                 <button
                   onClick={handleAddToGoogleCalendarButton}
-                  disabled={!calendarConnected || !userSignedUp}
+                  disabled={
+                    !calendarConnected ||
+                    !userSignedUp ||
+                    loadingAddEvent ||
+                    eventAdded
+                  }
                 >
-                  Add event to google calendar
+                  {loadingAddEvent
+                    ? "Adding event"
+                    : eventAdded
+                    ? "Added to Calendar"
+                    : "Add event to calendar"}
                 </button>
               </div>
             )}
