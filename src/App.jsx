@@ -16,6 +16,7 @@ import NotFoundPage from "./pages/NotFound";
 import StaffEventDetailsPage from "./pages/StaffEventDetailsPage";
 import PaymentPage from "./pages/PaymentPage";
 import MyEventsPage from "./pages/MyEventsPage";
+import Header from "./components/Header";
 
 function App() {
   const navigate = useNavigate();
@@ -47,6 +48,7 @@ function App() {
 
   return (
     <>
+      <Header />
       <Routes>
         <Route path="/" element={<LoginPage />} />
         <Route path="/staff-dashboard" element={<StaffEventPage />} />
