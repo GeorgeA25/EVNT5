@@ -62,6 +62,11 @@ const UserNavbar = ({ onLoggingOut }) => {
       );
     }
   };
+
+  const handleMyEvents = () => {
+    navigate("/signedUpEvents");
+  };
+
   return (
     <nav>
       <div>
@@ -75,6 +80,8 @@ const UserNavbar = ({ onLoggingOut }) => {
             <button onClick={handleDeleteAccount}> Delete Account</button>
             <br />
             <button onClick={handleGoBackToEvents}>Home Page</button>
+            <br />
+            <button onClick={handleMyEvents}>My Events</button>
           </div>
         )}
       </div>
