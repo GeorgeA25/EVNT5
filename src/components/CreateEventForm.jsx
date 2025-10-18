@@ -127,106 +127,108 @@ const EventForm = () => {
       {loading && <p>Loading please wait...</p>}
       <h2>Create an Event</h2>
       <form onSubmit={handleSubmit}>
-        <label>Event Title</label>
+        <label htmlFor="title">Event Title</label>
         <input
           type="text"
+          id="title"
           name="title"
           value={event.title}
           onChange={handleChange}
           required
           aria-invalid={inputErrors.title ? "true" : "false"}
-          aria-labelledby="title-label"
           aria-describedby={inputErrors.title ? "title-error" : ""}
         />
-        {inputErrors.title && <span id="title-error">{inputErrors.title}</span>}
-        <label>Event Description</label>
+        {inputErrors.title && (
+          <span id="title-error">{inputErrors.title || ""}</span>
+        )}
+        <label htmlFor="description">Event Description</label>
         <textarea
           name="description"
+          id="description"
           value={event.description}
           onChange={handleChange}
           required
           aria-invalid={inputErrors.description ? "true" : "false"}
-          aria-labelledby="description-label"
           aria-describedby={inputErrors.description ? "description-error" : ""}
         />
         {inputErrors.description && (
           <span id="description-error">{inputErrors.description}</span>
         )}
-        <label>Event Location</label>
+        <label htmlFor="location">Event Location</label>
         <input
           type="text"
+          id="location"
           name="location"
           value={event.location}
           onChange={handleChange}
           required
           aria-invalid={inputErrors.location ? "true" : "false"}
-          aria-labelledby="location-label"
           aria-describedby={inputErrors.location ? "location-error" : ""}
         />
         {inputErrors.location && (
           <span id="location-error">{inputErrors.location}</span>
         )}
-        <label>Event Date</label>
+        <label htmlFor="date">Event Date</label>
         <input
           type="date"
+          id="date"
           name="date"
           value={event.date}
           onChange={handleChange}
           required
           aria-invalid={inputErrors.date ? "true" : "false"}
-          aria-labelledby="date-label"
           aria-describedby={inputErrors.date ? "date-error" : ""}
         />
         {inputErrors.date && <span id="date-error">{inputErrors.date}</span>}
-        <label>Event Type</label>
+        <label htmlFor="type">Event Type</label>
         <input
           type="text"
+          id="type"
           name="type"
           value={event.type}
           onChange={handleChange}
           required
           aria-invalid={inputErrors.type ? "true" : "false"}
-          aria-labelledby="type-label"
           aria-describedby={inputErrors.type ? "type-error" : ""}
         />
         {inputErrors.type && <span id="type-error">{inputErrors.type}</span>}
-        <label>Event Start Time</label>
+        <label htmlFor="startTime">Event Start Time</label>
         <input
           type="time"
+          id="startTime"
           name="startTime"
           value={event.startTime}
           onChange={handleChange}
           required
           aria-invalid={inputErrors.startTime ? "true" : "false"}
-          aria-labelledby="startTime-label"
           aria-describedby={inputErrors.startTime ? "startTime-error" : ""}
         />
         {inputErrors.startTime && (
           <span id="startTime-error">{inputErrors.startTime}</span>
         )}
-        <label>Event End Time</label>
+        <label htmlFor="endTime">Event End Time</label>
         <input
           type="time"
+          id="endTime"
           name="endTime"
           value={event.endTime}
           onChange={handleChange}
           required
           aria-invalid={inputErrors.endTime ? "true" : "false"}
-          aria-labelledby="endTime-label"
           aria-describedby={inputErrors.endTime ? "endTime-error" : ""}
         />
         {inputErrors.endTime && (
           <span id="endTime-error">{inputErrors.endTime}</span>
         )}
-        <label>Event price</label>
+        <label htmlFor="price">Event price</label>
         <input
           type="number"
+          id="price"
           name="price"
           value={event.price}
           onChange={handleChange}
           required
           aria-invalid={inputErrors.price ? "true" : "false"}
-          aria-labelledby="price-label"
           aria-describedby={inputErrors.price ? "price-error" : ""}
         />
         {inputErrors.price && <span id="price-error">{inputErrors.price}</span>}
