@@ -13,6 +13,7 @@ import {
   addGoogleUsersToFirestore,
   getGoogleUsersFromFirestore,
 } from "../firebase/firebaseStore";
+import "../css/LoginPage.css";
 
 const LoginForm = () => {
   const [userEmail, setUserEmail] = useState("");
@@ -237,176 +238,261 @@ const LoginForm = () => {
 
   return (
     <section>
-      <h1> User Login/Register</h1>
-      {loginLoadingMessage && (
-        <p aria-live="polite">
-          {" "}
-          Loading login/registration page, please wait...
-        </p>
-      )}
-      {loginErrorMessage && (
-        <p id="userLoginError" role="alert">
-          {loginErrorMessage}
-        </p>
-      )}
+      <div className="login-box user">
+        <div className="login-container">
+          <h1 className="login-title"> User Login/Register</h1>
+          {loginLoadingMessage && (
+            <p aria-live="polite" className="login-loading">
+              {" "}
+              Loading login/registration page, please wait...
+            </p>
+          )}
+          {loginErrorMessage && (
+            <p id="userLoginError" role="alert" className="login-error">
+              {loginErrorMessage}
+            </p>
+          )}
 
-      <form onSubmit={handleUserEmailLogin} aria-busy={loginLoadingMessage}>
-        <label htmlFor="user-email">Email:</label>
-        <input
-          type="email"
-          id="user-email"
-          placeholder="Please enter your email"
-          value={userEmail}
-          onChange={(e) => setUserEmail(e.target.value)}
-          required
-        />
-        <label htmlFor="user-password">Password:</label>
-        <input
-          type="password"
-          id="user-password"
-          placeholder="Please enter your password"
-          value={userPassword}
-          onChange={(e) => setUserPassword(e.target.value)}
-          required
-          minLength={6}
-        />
+          <form
+            onSubmit={handleUserEmailLogin}
+            aria-busy={loginLoadingMessage}
+            className="login-form"
+          >
+            <label htmlFor="user-email" className="login-label">
+              Email:
+            </label>
+            <input
+              type="email"
+              id="user-email"
+              placeholder="Please enter your email"
+              value={userEmail}
+              className="login-input"
+              onChange={(e) => setUserEmail(e.target.value)}
+              required
+            />
+            <label htmlFor="user-password" className="login-label">
+              Password:
+            </label>
+            <input
+              type="password"
+              id="user-password"
+              placeholder="Please enter your password"
+              value={userPassword}
+              className="login-input"
+              onChange={(e) => setUserPassword(e.target.value)}
+              required
+              minLength={6}
+            />
 
-        <button type="submit" disabled={loginLoadingMessage}>
-          {registering ? "Logging in..." : "Login"}
-        </button>
-      </form>
-      <br />
-      {registerLoadingMessage && (
-        <p aria-live="polite">loading, please wait...</p>
-      )}
-      {registerErrorMessage && (
-        <p id="userRegisterError" role="alert" aria-live="assertive">
-          {registerErrorMessage || ""}
-        </p>
-      )}
-      {userFormErrorMessage && (
-        <p id="userFormError" role="alert" aria-live="assertive">
-          {userFormErrorMessage || ""}
-        </p>
-      )}
-      <form
-        onSubmit={handleUserRegister}
-        aria-describedby="userRegisterError userFormError"
-      >
-        <label htmlFor="user-email-register">Email:</label>
-        <input
-          type="email"
-          id="user-email-register"
-          placeholder="please enter email"
-          value={userRegisterEmail}
-          onChange={(e) => setUserRegisterEmail(e.target.value)}
-          disabled={registering}
-          required
-        />
-        <label htmlFor="user-password-register">Password:</label>
-        <input
-          type="password"
-          id="user-password-register"
-          placeholder="please enter password"
-          value={userRegisterPassword}
-          onChange={(e) => setUserRegisterPassword(e.target.value)}
-          required
-          minLength={6}
-          disabled={registering}
-        />
-        <button type="submit" disabled={registerLoadingMessage || registering}>
-          {registering ? "Registering..." : "Register"}
-        </button>
-      </form>
-      <h1> Staff Login/Register</h1>
-      {loginLoadingMessage && (
-        <p aria-live="polite">
-          {" "}
-          Loading login/registration page, please wait...
-        </p>
-      )}
-      {loginErrorMessage && (
-        <p id="staffLoginError" role="alert" aria-live="assertive">
-          {loginErrorMessage}
-        </p>
-      )}
+            <button
+              type="submit"
+              disabled={loginLoadingMessage}
+              className="login-button"
+            >
+              {registering ? "Logging in..." : "Login"}
+            </button>
+          </form>
 
-      <form
-        onSubmit={handleStaffEmailLogin}
-        aria-describedby="staffLoginError"
-        aria-busy={loginLoadingMessage}
-      >
-        <label htmlFor="staff-email">Email:</label>
-        <input
-          type="email"
-          id="staff-email"
-          placeholder="Please enter your email"
-          value={staffEmail}
-          onChange={(e) => setStaffEmail(e.target.value)}
-          required
-        />
-        <label htmlFor="staff-password">Password:</label>
-        <input
-          type="password"
-          id="staff-password"
-          placeholder="Please enter your password"
-          value={staffPassword}
-          onChange={(e) => setStaffPassword(e.target.value)}
-          required
-          minLength={6}
-        />
+          {registerLoadingMessage && (
+            <p aria-live="polite" className="login-loading">
+              loading, please wait...
+            </p>
+          )}
+          {registerErrorMessage && (
+            <p
+              id="userRegisterError"
+              role="alert"
+              aria-live="assertive"
+              className="register-error"
+            >
+              {registerErrorMessage || ""}
+            </p>
+          )}
+          {userFormErrorMessage && (
+            <p
+              id="userFormError"
+              role="alert"
+              aria-live="assertive"
+              className="form-error"
+            >
+              {userFormErrorMessage || ""}
+            </p>
+          )}
+          <form
+            onSubmit={handleUserRegister}
+            aria-describedby="userRegisterError userFormError"
+            className="login-form"
+          >
+            <label htmlFor="user-email-register" className="login-label">
+              Email:
+            </label>
+            <input
+              type="email"
+              id="user-email-register"
+              placeholder="please enter email"
+              value={userRegisterEmail}
+              className="login-input"
+              onChange={(e) => setUserRegisterEmail(e.target.value)}
+              disabled={registering}
+              required
+            />
+            <label htmlFor="user-password-register" className="login-label">
+              Password:
+            </label>
+            <input
+              type="password"
+              id="user-password-register"
+              placeholder="please enter password"
+              value={userRegisterPassword}
+              className="login-input"
+              onChange={(e) => setUserRegisterPassword(e.target.value)}
+              required
+              minLength={6}
+              disabled={registering}
+            />
+            <button
+              type="submit"
+              disabled={registerLoadingMessage || registering}
+              className="login-button"
+            >
+              {registering ? "Registering..." : "Register"}
+            </button>
+          </form>
+        </div>
+      </div>
+      <div className="login-box staff">
+        <div className="login-container">
+          <h1 className="login-title"> Staff Login/Register</h1>
+          {loginLoadingMessage && (
+            <p aria-live="polite" className="login-loading">
+              {" "}
+              Loading login/registration page, please wait...
+            </p>
+          )}
+          {loginErrorMessage && (
+            <p
+              id="staffLoginError"
+              role="alert"
+              aria-live="assertive"
+              className="login-error"
+            >
+              {loginErrorMessage}
+            </p>
+          )}
 
-        <button type="submit" disabled={loginLoadingMessage}>
-          {registering ? "Logging in..." : "Login"}
-        </button>
-      </form>
-      <br />
-      {registerLoadingMessage && (
-        <p aria-live="polite">loading, please wait...</p>
-      )}
-      {registerErrorMessage && (
-        <p id="staffRegisterError" role="alert" aria-live="assertive">
-          {registerErrorMessage || ""}
-        </p>
-      )}
-      {staffFormErrorMessage && (
-        <p id="staffFormError" role="alert" aria-live="assertive">
-          {staffFormErrorMessage || ""}
-        </p>
-      )}
-      <form
-        onSubmit={handleStaffRegister}
-        aria-describedby="staffRegisterError staffFormError"
-      >
-        <label htmlFor="staff-email-register">Email:</label>
-        <input
-          type="email"
-          id="staff-email-register"
-          placeholder="please enter email"
-          value={staffRegisterEmail}
-          onChange={(e) => setStaffRegisterEmail(e.target.value)}
-          disabled={registering}
-          required
-        />
-        <label htmlFor="staff-password-register">Password:</label>
-        <input
-          type="password"
-          id="staff-password-register"
-          placeholder="please enter password"
-          value={staffRegisterPassword}
-          onChange={(e) => setStaffRegisterPassword(e.target.value)}
-          required
-          minLength={6}
-          disabled={registering}
-        />
-        <button type="submit" disabled={registerLoadingMessage || registering}>
-          {registering ? "Registering..." : "Register"}
-        </button>
-      </form>
+          <form
+            onSubmit={handleStaffEmailLogin}
+            aria-describedby="staffLoginError"
+            aria-busy={loginLoadingMessage}
+            className="login-form"
+          >
+            <label htmlFor="staff-email" className="login-label">
+              Email:
+            </label>
+            <input
+              type="email"
+              id="staff-email"
+              placeholder="Please enter your email"
+              value={staffEmail}
+              className="login-input"
+              onChange={(e) => setStaffEmail(e.target.value)}
+              required
+            />
+            <label htmlFor="staff-password" className="login-label">
+              Password:
+            </label>
+            <input
+              type="password"
+              id="staff-password"
+              placeholder="Please enter your password"
+              value={staffPassword}
+              className="login-input"
+              onChange={(e) => setStaffPassword(e.target.value)}
+              required
+              minLength={6}
+            />
+
+            <button
+              type="submit"
+              disabled={loginLoadingMessage}
+              className="login-button"
+            >
+              {registering ? "Logging in..." : "Login"}
+            </button>
+          </form>
+
+          {registerLoadingMessage && (
+            <p aria-live="polite" className="login-loading">
+              loading, please wait...
+            </p>
+          )}
+          {registerErrorMessage && (
+            <p
+              id="staffRegisterError"
+              role="alert"
+              aria-live="assertive"
+              className="login-error"
+            >
+              {registerErrorMessage || ""}
+            </p>
+          )}
+          {staffFormErrorMessage && (
+            <p
+              id="staffFormError"
+              role="alert"
+              aria-live="assertive"
+              className="form-error"
+            >
+              {staffFormErrorMessage || ""}
+            </p>
+          )}
+          <form
+            onSubmit={handleStaffRegister}
+            aria-describedby="staffRegisterError staffFormError"
+            className="login-form"
+          >
+            <label htmlFor="staff-email-register" className="login-label">
+              Email:
+            </label>
+            <input
+              type="email"
+              id="staff-email-register"
+              placeholder="please enter email"
+              value={staffRegisterEmail}
+              className="login-input"
+              onChange={(e) => setStaffRegisterEmail(e.target.value)}
+              disabled={registering}
+              required
+            />
+            <label htmlFor="staff-password-register" className="login-label">
+              Password:
+            </label>
+            <input
+              type="password"
+              id="staff-password-register"
+              placeholder="please enter password"
+              value={staffRegisterPassword}
+              className="login-input"
+              onChange={(e) => setStaffRegisterPassword(e.target.value)}
+              required
+              minLength={6}
+              disabled={registering}
+            />
+            <button
+              type="submit"
+              disabled={registerLoadingMessage || registering}
+              className="login-button"
+            >
+              {registering ? "Registering..." : "Register"}
+            </button>
+          </form>
+        </div>
+      </div>
       <button
         onClick={handleGoogleLogin}
         disabled={googleLoginLoading}
         aria-label="Login with Google"
+        className="login-button google-login"
       >
         {" "}
         {googleLoginLoading ? "Logging in with Google..." : "Login with Google"}
