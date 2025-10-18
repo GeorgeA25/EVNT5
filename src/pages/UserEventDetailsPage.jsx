@@ -282,19 +282,21 @@ const UserEventDetailsPage = () => {
             clickable={false}
             onLoggingOut={() => setIsLoggingOut(true)}
           />
-          <h1>Sign Up Form</h1>
+          <h2>Sign Up Form</h2>
           <form onSubmit={handleSignUp}>
-            <label>Name:</label>
+            <label htmlFor="signup-name">Name:</label>
             <input
               type="text"
+              id="signup-name"
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Please enter your name"
               required
             ></input>
-            <label>Email:</label>
+            <label htmlFor="signup-email">Email:</label>
             <input
               type="email"
+              id="signup-email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Please enter your email"
@@ -379,7 +381,7 @@ const UserEventDetailsPage = () => {
               </p>
             )}
 
-            <h3>Users who have signed up</h3>
+            <h2>Users who have signed up</h2>
             <ul>
               {signUpsList.length > 0 ? (
                 signUpsList.map((signUp, index) => (
