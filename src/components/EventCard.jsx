@@ -12,7 +12,7 @@ const EventCard = ({ event, clickable = true, basePath = "/events" }) => {
 
   return (
     <div className="event-card" onClick={handleClick}>
-      <h3>{event.title}</h3>
+      <h2>{event.title}</h2>
       <p>Description: {event.description}</p>
       <p>Loaction: {event.location}</p>
       <p>Type: {event.type}</p>
