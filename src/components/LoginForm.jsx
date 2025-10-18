@@ -259,7 +259,6 @@ const LoginForm = () => {
           value={userEmail}
           onChange={(e) => setUserEmail(e.target.value)}
           required
-          aria-required="true"
         />
         <label htmlFor="user-password">Password:</label>
         <input
@@ -270,7 +269,6 @@ const LoginForm = () => {
           onChange={(e) => setUserPassword(e.target.value)}
           required
           minLength={6}
-          aria-required="true"
         />
 
         <button type="submit" disabled={loginLoadingMessage}>
@@ -282,17 +280,20 @@ const LoginForm = () => {
         <p aria-live="polite">loading, please wait...</p>
       )}
       {registerErrorMessage && (
-        <p id="userRegisterError" role="alert">
-          {registerErrorMessage}
+        <p id="userRegisterError" role="alert" aria-live="assertive">
+          {registerErrorMessage || ""}
         </p>
       )}
       {userFormErrorMessage && (
-        <p id="userFormError" role="alert">
-          {userFormErrorMessage}
+        <p id="userFormError" role="alert" aria-live="assertive">
+          {userFormErrorMessage || ""}
         </p>
       )}
-      <form onSubmit={handleUserRegister}>
-        <label htmlFor="email-register">Email:</label>
+      <form
+        onSubmit={handleUserRegister}
+        aria-describedby="userRegisterError userFormError"
+      >
+        <label htmlFor="user-email-register">Email:</label>
         <input
           type="email"
           id="user-email-register"
@@ -300,9 +301,9 @@ const LoginForm = () => {
           value={userRegisterEmail}
           onChange={(e) => setUserRegisterEmail(e.target.value)}
           disabled={registering}
-          aria-required="true"
+          required
         />
-        <label htmlFor="password-register">Password:</label>
+        <label htmlFor="user-password-register">Password:</label>
         <input
           type="password"
           id="user-password-register"
@@ -312,7 +313,6 @@ const LoginForm = () => {
           required
           minLength={6}
           disabled={registering}
-          aria-required="true"
         />
         <button type="submit" disabled={registerLoadingMessage || registering}>
           {registering ? "Registering..." : "Register"}
@@ -326,7 +326,7 @@ const LoginForm = () => {
         </p>
       )}
       {loginErrorMessage && (
-        <p id="staffLoginError" role="alert">
+        <p id="staffLoginError" role="alert" aria-live="assertive">
           {loginErrorMessage}
         </p>
       )}
@@ -344,7 +344,6 @@ const LoginForm = () => {
           value={staffEmail}
           onChange={(e) => setStaffEmail(e.target.value)}
           required
-          aria-required="true"
         />
         <label htmlFor="staff-password">Password:</label>
         <input
@@ -355,7 +354,6 @@ const LoginForm = () => {
           onChange={(e) => setStaffPassword(e.target.value)}
           required
           minLength={6}
-          aria-required="true"
         />
 
         <button type="submit" disabled={loginLoadingMessage}>
@@ -367,30 +365,30 @@ const LoginForm = () => {
         <p aria-live="polite">loading, please wait...</p>
       )}
       {registerErrorMessage && (
-        <p id="staffRegisterError" role="alert">
-          {registerErrorMessage}
+        <p id="staffRegisterError" role="alert" aria-live="assertive">
+          {registerErrorMessage || ""}
         </p>
       )}
       {staffFormErrorMessage && (
-        <p id="staffFormError" role="alert">
-          {staffFormErrorMessage}
+        <p id="staffFormError" role="alert" aria-live="assertive">
+          {staffFormErrorMessage || ""}
         </p>
       )}
       <form
         onSubmit={handleStaffRegister}
         aria-describedby="staffRegisterError staffFormError"
       >
-        <label htmlFor="email-register">Email:</label>
+        <label htmlFor="staff-email-register">Email:</label>
         <input
           type="email"
-          id="staff-mail-register"
+          id="staff-email-register"
           placeholder="please enter email"
           value={staffRegisterEmail}
           onChange={(e) => setStaffRegisterEmail(e.target.value)}
           disabled={registering}
-          aria-required="true"
+          required
         />
-        <label htmlFor="password-register">Password:</label>
+        <label htmlFor="staff-password-register">Password:</label>
         <input
           type="password"
           id="staff-password-register"
@@ -400,13 +398,16 @@ const LoginForm = () => {
           required
           minLength={6}
           disabled={registering}
-          aria-required="true"
         />
         <button type="submit" disabled={registerLoadingMessage || registering}>
           {registering ? "Registering..." : "Register"}
         </button>
       </form>
-      <button onClick={handleGoogleLogin} disabled={googleLoginLoading}>
+      <button
+        onClick={handleGoogleLogin}
+        disabled={googleLoginLoading}
+        aria-label="Login with Google"
+      >
         {" "}
         {googleLoginLoading ? "Logging in with Google..." : "Login with Google"}
       </button>
