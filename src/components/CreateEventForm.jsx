@@ -123,11 +123,14 @@ const EventForm = () => {
   }, [successMessage, navigate]);
 
   return (
-    <section>
-      {loading && <p>Loading please wait...</p>}
-      <h2>Create an Event</h2>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="title">Event Title</label>
+    <section className="create-event-section">
+      {loading && (
+        <p className="create-event-loading">Loading please wait...</p>
+      )}
+      <form onSubmit={handleSubmit} className="create-event-form">
+        <label htmlFor="title" className="create-event-label">
+          Event Title:
+        </label>
         <input
           type="text"
           id="title"
@@ -137,11 +140,16 @@ const EventForm = () => {
           required
           aria-invalid={inputErrors.title ? "true" : "false"}
           aria-describedby={inputErrors.title ? "title-error" : ""}
+          className="create-event-input"
         />
         {inputErrors.title && (
-          <span id="title-error">{inputErrors.title || ""}</span>
+          <span id="title-error" className="create-event-form-error">
+            {inputErrors.title || ""}
+          </span>
         )}
-        <label htmlFor="description">Event Description</label>
+        <label htmlFor="description" className="create-event-label">
+          Event Description:
+        </label>
         <textarea
           name="description"
           id="description"
@@ -150,11 +158,16 @@ const EventForm = () => {
           required
           aria-invalid={inputErrors.description ? "true" : "false"}
           aria-describedby={inputErrors.description ? "description-error" : ""}
+          className="create-event-input"
         />
         {inputErrors.description && (
-          <span id="description-error">{inputErrors.description}</span>
+          <span id="description-error" className="create-event-form-error">
+            {inputErrors.description}
+          </span>
         )}
-        <label htmlFor="location">Event Location</label>
+        <label htmlFor="location" className="create-event-label">
+          Event Location:
+        </label>
         <input
           type="text"
           id="location"
@@ -164,11 +177,16 @@ const EventForm = () => {
           required
           aria-invalid={inputErrors.location ? "true" : "false"}
           aria-describedby={inputErrors.location ? "location-error" : ""}
+          className="create-event-input"
         />
         {inputErrors.location && (
-          <span id="location-error">{inputErrors.location}</span>
+          <span id="location-error" className="create-event-form-error">
+            {inputErrors.location}
+          </span>
         )}
-        <label htmlFor="date">Event Date</label>
+        <label htmlFor="date" className="create-event-label">
+          Event Date:
+        </label>
         <input
           type="date"
           id="date"
@@ -178,9 +196,16 @@ const EventForm = () => {
           required
           aria-invalid={inputErrors.date ? "true" : "false"}
           aria-describedby={inputErrors.date ? "date-error" : ""}
+          className="create-event-input"
         />
-        {inputErrors.date && <span id="date-error">{inputErrors.date}</span>}
-        <label htmlFor="type">Event Type</label>
+        {inputErrors.date && (
+          <span id="date-error" className="create-event-form-error">
+            {inputErrors.date}
+          </span>
+        )}
+        <label htmlFor="type" className="create-event-label">
+          Event Type:
+        </label>
         <input
           type="text"
           id="type"
@@ -190,9 +215,16 @@ const EventForm = () => {
           required
           aria-invalid={inputErrors.type ? "true" : "false"}
           aria-describedby={inputErrors.type ? "type-error" : ""}
+          className="create-event-input"
         />
-        {inputErrors.type && <span id="type-error">{inputErrors.type}</span>}
-        <label htmlFor="startTime">Event Start Time</label>
+        {inputErrors.type && (
+          <span id="type-error" className="create-event-form-error">
+            {inputErrors.type}
+          </span>
+        )}
+        <label htmlFor="startTime" className="create-event-label">
+          Event Start Time:
+        </label>
         <input
           type="time"
           id="startTime"
@@ -202,11 +234,16 @@ const EventForm = () => {
           required
           aria-invalid={inputErrors.startTime ? "true" : "false"}
           aria-describedby={inputErrors.startTime ? "startTime-error" : ""}
+          className="create-event-input"
         />
         {inputErrors.startTime && (
-          <span id="startTime-error">{inputErrors.startTime}</span>
+          <span id="startTime-error" className="create-event-form-error">
+            {inputErrors.startTime}
+          </span>
         )}
-        <label htmlFor="endTime">Event End Time</label>
+        <label htmlFor="endTime" className="create-event-label">
+          Event End Time:
+        </label>
         <input
           type="time"
           id="endTime"
@@ -216,11 +253,16 @@ const EventForm = () => {
           required
           aria-invalid={inputErrors.endTime ? "true" : "false"}
           aria-describedby={inputErrors.endTime ? "endTime-error" : ""}
+          className="create-event-input"
         />
         {inputErrors.endTime && (
-          <span id="endTime-error">{inputErrors.endTime}</span>
+          <span id="endTime-error" className="create-event-form-error">
+            {inputErrors.endTime}
+          </span>
         )}
-        <label htmlFor="price">Event price</label>
+        <label htmlFor="price" className="create-event-label">
+          Event price:
+        </label>
         <input
           type="number"
           id="price"
@@ -230,11 +272,20 @@ const EventForm = () => {
           required
           aria-invalid={inputErrors.price ? "true" : "false"}
           aria-describedby={inputErrors.price ? "price-error" : ""}
+          className="create-event-input"
         />
-        {inputErrors.price && <span id="price-error">{inputErrors.price}</span>}
-        <button type="submit">Create Event</button>
-        {error && <p>{error}</p>}
-        {successMessage && <p>{successMessage}</p>}
+        {inputErrors.price && (
+          <span id="price-error" className="create-event-form-error">
+            {inputErrors.price}
+          </span>
+        )}
+        <button type="submit" className="create-event-button">
+          Create Event
+        </button>
+        {error && <p className="create-event-error">{error}</p>}
+        {successMessage && (
+          <p className="creat-event-message">{successMessage}</p>
+        )}
       </form>
     </section>
   );
