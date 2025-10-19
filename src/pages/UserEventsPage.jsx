@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import EventCard from "../components/EventCard";
 import UserNavbar from "../components/UserNavbar";
 import Footer from "../components/Footer";
+import "../css/EventsPage.css";
+import "../css/Footer.css";
 
 const UserEventsPage = () => {
   const [events, setEvents] = useState([]);
@@ -29,17 +31,18 @@ const UserEventsPage = () => {
   }, []);
 
   return (
-    <section>
-      <h1>Welcome to Evnt5 Page</h1>
+    <section className="events-section">
+      <h1 className="events-message">Events Page</h1>
       <UserNavbar />
-      <br />
-      {loading && <p>Loading events please wait...</p>}
-      {error && <p>{error}</p>}
+      {loading && (
+        <p className="events-loading">Loading events please wait...</p>
+      )}
+      {error && <p className="events-error">{error}</p>}
       {!loading && !error && events.length === 0 && (
         <p>No events avaliable at the moment. PLease check back in later</p>
       )}
       {!loading && !error && events.length > 0 && (
-        <div>
+        <div className="events-list">
           {events.map((event) => (
             <EventCard key={event.id} event={event} />
           ))}
