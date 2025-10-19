@@ -93,6 +93,7 @@ Also note that you should store the .env file inside the .gitignore file for pri
 📝 Prerequisites / Required Accounts
 
 Before running the app locally, you'll need to setup accounts and credentials for the following services:
+
 1.Firebase
 
 First signup to firebase and create a project. Upon creating a project inside the settings of project overview, if you scroll down you'll see your firebase config object which you'll need to store inside the .env file. Also you'll need to set up Firestore, Authentication and functions. Also on the authentication page you'll have to enable email/passsword and google login as well.
