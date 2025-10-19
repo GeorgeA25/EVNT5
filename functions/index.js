@@ -155,7 +155,7 @@ export const exchangeGoogleCode = onRequest(
         }
         const clientId = await GOOGLE_CLIENT_ID.value();
         const clientSecret = await GOOGLE_CLIENT_SECRET.value();
-        const redirectUri = "http://localhost:5173/oauth2callback";
+        const redirectUri = "https://evnt5-97cf1.web.app/oauth2callback";
         const tokenRes = await fetch("https://oauth2.googleapis.com/token", {
           method: "POST",
           headers: { "Content-Type": "application/x-www-form-urlencoded" },
