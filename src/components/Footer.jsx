@@ -7,7 +7,9 @@ const Footer = () => {
 
   return (
     <footer>
-      <button onClick={handleScrollToTopOfPage}>Back to Top</button>
+      <button onClick={handleScrollToTopOfPage} className="footer-button">
+        Back to Top
+      </button>
     </footer>
   );
 };
