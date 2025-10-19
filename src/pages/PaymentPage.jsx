@@ -9,6 +9,7 @@ import { useState } from "react";
 import PaymentForm from "../components/PaymentForm";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
+import "../css/PaymentPage.css";
 
 const stripeKey = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
@@ -77,18 +78,36 @@ const PaymentPage = () => {
   };
   return (
     <>
-      <h1>Pay for {eventDetails.title}</h1>
-      <p>Amount: £{Number(eventDetails.price.toFixed(2))}</p>
-      {error && <p role="alert">{error}</p>}
-      {message && <p role="status">{message}</p>}
-      {loading && <p>Processing...</p>}
-      <Elements stripe={stripeKey}>
-        <PaymentForm
-          amountPounds={Number(eventDetails.price)}
-          currency="gbp"
-          onPaymentSuccess={handlePayment}
-        />
-      </Elements>
+      <section className="payment-page-section">
+        <h1 className="payment-page-title">Pay for {eventDetails.title}</h1>
+        <p className="payment-page-amount">
+          Amount: £{Number(eventDetails.price.toFixed(2))}
+        </p>
+        {error && (
+          <p role="alert" className="payment-page-error">
+            {error}
+          </p>
+        )}
+        {message && (
+          <p role="status" className="payment-page-message">
+            {message}
+          </p>
+        )}
+        {loading && (
+          <p className="payment-page-loading" role="polite">
+            Processing...
+          </p>
+        )}
+        <div className="payment-page-container">
+          <Elements stripe={stripeKey}>
+            <PaymentForm
+              amountPounds={Number(eventDetails.price)}
+              currency="gbp"
+              onPaymentSuccess={handlePayment}
+            />
+          </Elements>
+        </div>
+      </section>
     </>
   );
 };
