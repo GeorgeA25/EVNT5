@@ -18,9 +18,11 @@ Upon signing up to a paid event you'll be navigated to a payment page. Because n
 
 Card Number- 4242 4242 4242 4242
 
-cvc- any date can be used aslong as it is a date that is pass the event date you have signed up for.
+card expiry date- any date can be used aslong as it is a date that is pass the event date you have signed up for.
 
-then the 3 digit number you can pass in is 123 and for the zip code you can pass in 12345.
+cvc number you can use 123
+ 
+zip code you can pass in 12345.
 
 ---
 
