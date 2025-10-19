@@ -329,7 +329,7 @@ const UserEventDetailsPage = () => {
                     <button
                       onClick={handleConnectGoogleCalendar}
                       disabled={
-                        !userSignedUp || !loadingConnect || calendarConnected
+                        !userSignedUp || loadingConnect || calendarConnected
                       }
                       className="google-connect-button"
                     >
@@ -345,7 +345,7 @@ const UserEventDetailsPage = () => {
                         aria-live="assertive"
                         style={{ color: "red" }}
                       >
-                        Pleas connect your Google Calendar first before adding
+                        Please connect your Google Calendar first before adding
                         the event to your calendar
                       </p>
                     )}
