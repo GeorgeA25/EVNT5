@@ -261,8 +261,9 @@ const UserEventDetailsPage = () => {
           <div>
             <p className="shared-event-message">
               You're viewing a shared event link. To sign up for this event or
-              if you have a Google Account, sign up then add the event to your
-              Google Calendar, please visit this link.
+              if you have a Google Account, Firstly register an account then
+              sign up to the event and finally add the event to your Google
+              Calendar, please visit this link.
               <a
                 href="https://evnt5-97cf1.firebaseapp.com"
                 target="_blank"
