@@ -13,6 +13,7 @@ import UserNavbar from "../components/UserNavbar";
 import sendConfirmationEmail from "../utils/confirmationEmail";
 import { useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
+import "../css/EventDetailsPage.css";
 
 const UserEventDetailsPage = () => {
   const { eventId } = useParams();
@@ -246,155 +247,187 @@ const UserEventDetailsPage = () => {
 
   return (
     <>
-      <h1>{eventDetails.title}</h1>
+      <section className="event-page-section">
+        <h1 className="event-page-title">Event Details</h1>
 
-      <div>
         {loading ? (
-          <p>Loading event details...</p>
+          <p className="event-loading">Loading event details...</p>
         ) : eventDetails.title ? (
           <EventCard event={eventDetails} />
         ) : (
           <p>No event details avaliable</p>
         )}
-      </div>
-      {!user && authChecked && (
-        <div>
-          <p>
-            You're viewing a shared event link. To sign up for this event or if
-            you have a Google Account, sign up then add the event to your Google
-            Calendar, please visit this link.
-            <a
-              href="https://evnt5-97cf1.web.app/"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ color: "blue", textDecoration: "underline" }}
-            >
-              https://evnt5-97cf1.web.app/
-            </a>
-          </p>
-        </div>
-      )}
-      {loading && <p>Loading form please wait...</p>}
-      {error && <p>{error}</p>}
-      {authChecked && user && (
-        <>
-          <UserNavbar
-            clickable={false}
-            onLoggingOut={() => setIsLoggingOut(true)}
-          />
-          <h2>Sign Up Form</h2>
-          <form onSubmit={handleSignUp}>
-            <label htmlFor="signup-name">Name:</label>
-            <input
-              type="text"
-              id="signup-name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              placeholder="Please enter your name"
-              required
-            ></input>
-            <label htmlFor="signup-email">Email:</label>
-            <input
-              type="email"
-              id="signup-email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Please enter your email"
-              required
-            ></input>
-            <button type="submit" disabled={loadingSignUp || userSignedUp}>
-              {userSignedUp
-                ? "Already signed up"
-                : loadingSignUp
-                ? "Signing Up..."
-                : "Sign Up"}
-            </button>
-          </form>
+        {authChecked && user && (
+          <>
+            <UserNavbar
+              clickable={false}
+              onLoggingOut={() => setIsLoggingOut(true)}
+            />
 
-          <div>
-            <button onClick={copyEventUrl}>Copy Event URL</button>
-          </div>
-          {message && <p>{message}</p>}
-          {error && <p>{error}</p>}
-          <div>
-            {googleUser && (
-              <div>
-                <h2>Google Calendar</h2>
-                {!userSignedUp && (
-                  <p
-                    role="alert"
-                    aria-live="assertive"
-                    style={{ color: "red" }}
-                  >
-                    You must be signed up for this event in order to add the
-                    event to your calendar. Upon signing up, please connect your
-                    Google Calendar
-                  </p>
-                )}
+            <div className="signup-card">
+              <h2 className="sign-up-form-title">Sign Up Form</h2>
+              <form onSubmit={handleSignUp} className="signup-form">
+                <label htmlFor="signup-name" className="signup-label">
+                  Name:
+                </label>
+                <input
+                  type="text"
+                  id="signup-name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder="Please enter your name"
+                  required
+                  className="signup-input"
+                ></input>
+                <label htmlFor="signup-email" className="event-signup-label">
+                  Email:
+                </label>
+                <input
+                  type="email"
+                  id="signup-email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Please enter your email"
+                  required
+                  className="signup-input"
+                ></input>
                 <button
-                  onClick={handleConnectGoogleCalendar}
-                  disabled={
-                    !userSignedUp || !loadingConnect || calendarConnected
-                  }
+                  type="submit"
+                  disabled={loadingSignUp || userSignedUp}
+                  className="signup-button"
                 >
-                  {loadingConnect
-                    ? "Connecting"
-                    : calendarConnected
-                    ? "Connected to Google Calendar"
-                    : "Connect Google Calendar"}
+                  {userSignedUp
+                    ? "Already signed up"
+                    : loadingSignUp
+                    ? "Signing Up..."
+                    : "Sign Up"}
                 </button>
-                {!calendarConnected && (
-                  <p
-                    role="alert"
-                    aria-live="assertive"
-                    style={{ color: "red" }}
-                  >
-                    Pleas connect your Google Calendar first before adding the
-                    event to your calendar
-                  </p>
-                )}
-                <button
-                  onClick={handleAddToGoogleCalendarButton}
-                  disabled={
-                    !calendarConnected ||
-                    !userSignedUp ||
-                    loadingAddEvent ||
-                    eventAdded
-                  }
-                >
-                  {loadingAddEvent
-                    ? "Adding event"
-                    : eventAdded
-                    ? "Added to Calendar"
-                    : "Add event to calendar"}
+              </form>
+
+              <div>
+                <button onClick={copyEventUrl} className="copy-url-button">
+                  Copy Event URL
                 </button>
               </div>
-            )}
-            {error && (
-              <p role="alert" aria-live="assertive" style={{ color: "red" }}>
-                {error}
-              </p>
-            )}
-            {message && (
-              <p role="status" aria-live="polite" style={{ color: "green" }}>
-                {message}
-              </p>
-            )}
+              {message && <p className="event-message">{message}</p>}
+              {error && <p className="event-error">{error}</p>}
+              <div>
+                {googleUser && (
+                  <div>
+                    <h2 className="google-title">Google Calendar</h2>
+                    {!userSignedUp && (
+                      <p
+                        role="alert"
+                        aria-live="assertive"
+                        style={{ color: "red" }}
+                      >
+                        You must be signed up for this event in order to add the
+                        event to your calendar. Upon signing up, please connect
+                        your Google Calendar
+                      </p>
+                    )}
+                    <button
+                      onClick={handleConnectGoogleCalendar}
+                      disabled={
+                        !userSignedUp || !loadingConnect || calendarConnected
+                      }
+                      className="google-connect-button"
+                    >
+                      {loadingConnect
+                        ? "Connecting"
+                        : calendarConnected
+                        ? "Connected to Google Calendar"
+                        : "Connect Google Calendar"}
+                    </button>
+                    {!calendarConnected && (
+                      <p
+                        role="alert"
+                        aria-live="assertive"
+                        style={{ color: "red" }}
+                      >
+                        Pleas connect your Google Calendar first before adding
+                        the event to your calendar
+                      </p>
+                    )}
+                    <button
+                      onClick={handleAddToGoogleCalendarButton}
+                      disabled={
+                        !calendarConnected ||
+                        !userSignedUp ||
+                        loadingAddEvent ||
+                        eventAdded
+                      }
+                      className="google-add-button"
+                    >
+                      {loadingAddEvent
+                        ? "Adding event"
+                        : eventAdded
+                        ? "Added to Calendar"
+                        : "Add event to calendar"}
+                    </button>
+                  </div>
+                )}
+                {error && (
+                  <p
+                    role="alert"
+                    aria-live="assertive"
+                    style={{ color: "red" }}
+                  >
+                    {error}
+                  </p>
+                )}
+                {message && (
+                  <p
+                    role="status"
+                    aria-live="polite"
+                    style={{ color: "green" }}
+                  >
+                    {message}
+                  </p>
+                )}
 
-            <h2>Users who have signed up</h2>
-            <ul>
-              {signUpsList.length > 0 ? (
-                signUpsList.map((signUp, index) => (
-                  <li key={index}>{signUp.name}</li>
-                ))
-              ) : (
-                <p>No users have signed up yet.</p>
-              )}
-            </ul>
-          </div>
-        </>
-      )}
-      <Footer />
+                <h2 className="signups-list-title">Users who have signed up</h2>
+                <ul className="signups-list">
+                  {signUpsList.length > 0 ? (
+                    signUpsList.map((signUp, index) => (
+                      <li key={index} className="signup-name">
+                        {signUp.name}
+                      </li>
+                    ))
+                  ) : (
+                    <p>No users have signed up yet.</p>
+                  )}
+                </ul>
+              </div>
+            </div>
+            {!user && authChecked && (
+              <div>
+                <p className="shared-event-message">
+                  You're viewing a shared event link. To sign up for this event
+                  or if you have a Google Account, sign up then add the event to
+                  your Google Calendar, please visit this link.
+                  <a
+                    href="https://evnt5-97cf1.web.app/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ color: "blue", textDecoration: "underline" }}
+                    className="event-shared-link"
+                  >
+                    https://evnt5-97cf1.web.app/
+                  </a>
+                </p>
+              </div>
+            )}
+            {loading && (
+              <p className="event-details-loading">
+                Loading form please wait...
+              </p>
+            )}
+            {error && <p className="event-details-error">{error}</p>}
+          </>
+        )}
+        <Footer />
+      </section>
     </>
   );
 };
