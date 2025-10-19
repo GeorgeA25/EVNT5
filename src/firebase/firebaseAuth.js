@@ -49,9 +49,7 @@ const connectGoogleCalendar = async () => {
     prompt: "consent",
     access_type: "offline",
   });
-  provider.addScope(
-    `https://evnt5-97cf1.firebaseapp.com/oauth2callback?state=${uid}`
-  );
+  provider.addScope(`https://evnt5-97cf1.web.app/oauth2callback?state=${uid}`);
   try {
     const outcome = await signInWithPopup(auth, provider);
     const credential = GoogleAuthProvider.credentialFromResult(outcome);
