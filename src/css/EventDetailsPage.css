@@ -1,0 +1,112 @@
+.event-page-section {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 2rem;
+  align-items: center;
+  box-sizing: border-box;
+  min-height: 100vh;
+}
+
+.event-card {
+  width: 50%;
+}
+
+.signup-card {
+  background-color: rgb(26, 25, 25);
+  padding: 2rem;
+  border-radius: 0.75rem;
+  border: 0.0625rem solid orange;
+  box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.3);
+  gap: 1rem;
+  color: whitesmoke;
+  width: 50%;
+}
+
+.signup-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.signup-input {
+  padding: 0.75rem;
+  border-radius: 0.375rem;
+  border: 0.0625rem solid orange;
+  background-color: black;
+  color: white;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.signup-input:focus {
+  outline: none;
+  border-color: orange;
+  box-shadow: 0 0 0.25rem rgba(255, 165, 0, 0.5);
+}
+
+.signup-button {
+  padding: 0.75rem;
+  border-radius: 0.375rem;
+  border: 0.0625rem solid orange;
+  background-color: black;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.copy-url-button {
+  padding: 0.75rem;
+  border-radius: 0.375rem;
+  border: 0.0625rem solid rgb(6, 147, 241);
+  background-color: black;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.google-connect-button {
+  padding: 0.75rem;
+  border-radius: 0.375rem;
+  border: 0.0625rem solid red;
+  background-color: black;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.google-add-button {
+  padding: 0.75rem;
+  border-radius: 0.375rem;
+  border: 0.0625rem solid red;
+  background-color: black;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.signups-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.signup-name {
+  padding: 0.5rem 0;
+  border-bottom: 0.0625rem solid orange;
+}
+
+.event-page-title {
+  font-family: "Chromium One", sans-serif;
+  font-size: 2.5rem;
+  color: #f5f4f7;
+  text-shadow: 0.0625rem 0.0625rem 0 #8f07dd,
+    0.125rem 0.125rem 0.1875rem rgba(130, 14, 184, 0.2);
+  letter-spacing: 0.05em;
+  text-align: center;
+  justify-content: center;
+}
