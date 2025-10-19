@@ -46,8 +46,6 @@ Notifications throughout the app
 
 📁 Project Structure
 
-📁 Project Structure
-
 evnt5/
 ├─ src/
 │  ├─ components/    # React components (EventCard, UserNavbar, Footer)
