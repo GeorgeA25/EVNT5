@@ -257,13 +257,30 @@ const UserEventDetailsPage = () => {
         ) : (
           <p>No event details avaliable</p>
         )}
+        {!user && authChecked && (
+          <div>
+            <p className="shared-event-message">
+              You're viewing a shared event link. To sign up for this event or
+              if you have a Google Account, sign up then add the event to your
+              Google Calendar, please visit this link.
+              <a
+                href="https://evnt5-97cf1.firebaseapp.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ color: "blue", textDecoration: "underline" }}
+                className="event-shared-link"
+              >
+                https://evnt5-97cf1.firebaseapp.com
+              </a>
+            </p>
+          </div>
+        )}
         {authChecked && user && (
           <>
             <UserNavbar
               clickable={false}
               onLoggingOut={() => setIsLoggingOut(true)}
             />
-
             <div className="signup-card">
               <h2 className="sign-up-form-title">Sign Up Form</h2>
               <form onSubmit={handleSignUp} className="signup-form">
@@ -400,24 +417,7 @@ const UserEventDetailsPage = () => {
                 </ul>
               </div>
             </div>
-            {!user && authChecked && (
-              <div>
-                <p className="shared-event-message">
-                  You're viewing a shared event link. To sign up for this event
-                  or if you have a Google Account, sign up then add the event to
-                  your Google Calendar, please visit this link.
-                  <a
-                    href="https://evnt5-97cf1.firebaseapp.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{ color: "blue", textDecoration: "underline" }}
-                    className="event-shared-link"
-                  >
-                    https://evnt5-97cf1.firebaseapp.com
-                  </a>
-                </p>
-              </div>
-            )}
+
             {loading && (
               <p className="event-details-loading">
                 Loading form please wait...
