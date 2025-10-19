@@ -102,10 +102,10 @@ export const addEventToGoogleCalendar = onRequest(
           refresh_token,
         });
 
-        const { token: newAccessToken } = await oauth2Client.getAccessToken();
+        const { token: accessToken } = await oauth2Client.getAccessToken();
 
         oauth2Client.setCredentials({
-          access_token: newAccessToken,
+          access_token: accessToken,
           refresh_token,
         });
 
