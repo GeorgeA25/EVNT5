@@ -9,6 +9,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import EventCard from "../components/EventCard";
 import StaffNavbar from "../components/StaffNavBar";
 import Footer from "../components/Footer";
+import "../css/EventDetailsPage.css";
 
 const StaffEventDetailPage = () => {
   const [draftEvent, setDraftEvent] = useState({});
@@ -108,34 +109,59 @@ const StaffEventDetailPage = () => {
   }
 
   return (
-    <section aria-labelledby="staff-event-details">
+    <section
+      aria-labelledby="staff-event-details"
+      className="staff-event-details-section"
+    >
       <StaffNavbar onLoggingOut={() => setIsLoggingOut(true)} />
-      <h2>Event Details</h2>
+      <h2 className="staff-event-title">Event Details</h2>
       <EventCard event={eventDetails} clickable={false} />
 
       {currentUser && currentUser.uid === eventDetails.createdBy && (
-        <div aria-label="Staff Event controls">
+        <div aria-label="Staff Event controls" className="staff-controls">
           {!editing ? (
-            <button onClick={() => setEditing(true)} aria-label="true">
+            <button
+              onClick={() => setEditing(true)}
+              aria-label="true"
+              className="staff-button"
+            >
               Edit Event
             </button>
           ) : (
-            <button onClick={handleCancel} aria-label="Cancel Edit">
+            <button
+              onClick={handleCancel}
+              aria-label="Cancel Edit"
+              className="staff-button"
+            >
               Cancel
             </button>
           )}
-          <button onClick={handleDelete} aria-label="Delete Event">
+          <button
+            onClick={handleDelete}
+            aria-label="Delete Event"
+            className="staff-button"
+          >
             Delete Event
           </button>
         </div>
       )}
-      {message && <p aria-live="polite">{message}</p>}
-      {error && <p aria-live="assertive">{error}</p>}
+      {message && (
+        <p aria-live="polite" className="staff-message">
+          {message}
+        </p>
+      )}
+      {error && (
+        <p aria-live="assertive" classname="staff-error">
+          {error}
+        </p>
+      )}
       {editing && (
         <>
           <h2>Edit Event Form</h2>
-          <form aria-label="Edit event form">
-            <label htmlFor="title">Title:</label>
+          <form aria-label="Edit event form" className="edit-event-form">
+            <label htmlFor="title" className="edit-event-label">
+              Title:
+            </label>
             <input
               id="title"
               name="title"
@@ -145,8 +171,9 @@ const StaffEventDetailPage = () => {
               aria-label="Event Title"
               aria-required="true"
               required
+              className="edit-event-input"
             />
-            <label htmlFor="description"></label>
+            <label htmlFor="description" className="edit-event-label"></label>
             <textarea
               id="description"
               name="description"
@@ -155,8 +182,11 @@ const StaffEventDetailPage = () => {
               aria-label="Event Description"
               aria-required="true"
               required
+              className="edit-event-input"
             ></textarea>
-            <label htmlFor="location">Location</label>
+            <label htmlFor="location" className="edit-event-label">
+              Location
+            </label>
             <input
               id="location"
               name="location"
@@ -166,8 +196,11 @@ const StaffEventDetailPage = () => {
               aria-label="Event Location"
               aria-required="true"
               required
+              className="edit-event-input"
             ></input>
-            <label htmlFor="date">Date:</label>
+            <label htmlFor="date" className="edit-event-label">
+              Date:
+            </label>
             <input
               id="date"
               name="date"
@@ -177,8 +210,11 @@ const StaffEventDetailPage = () => {
               aria-label="Event Date"
               aria-required="true"
               required
+              className="edit-event-input"
             ></input>
-            <label htmlFor="startTime">Starttime</label>
+            <label htmlFor="startTime" className="edit-event-label">
+              Starttime
+            </label>
             <input
               id="startTime"
               name="startTime"
@@ -188,8 +224,11 @@ const StaffEventDetailPage = () => {
               aria-label="Event Starttime"
               aria-required="true"
               required
+              className="edit-event-input"
             ></input>
-            <label htmlFor="endTime">Endtime:</label>
+            <label htmlFor="endTime" className="edit-event-label">
+              Endtime:
+            </label>
             <input
               id="endTime"
               name="endTime"
@@ -199,8 +238,11 @@ const StaffEventDetailPage = () => {
               aria-label="Event Endtime"
               aria-required="true"
               required
+              className="edit-event-input"
             ></input>
-            <label htmlFor="type">Type</label>
+            <label htmlFor="type" className="edit-event-label">
+              Type
+            </label>
             <input
               id="type"
               name="type"
@@ -210,8 +252,11 @@ const StaffEventDetailPage = () => {
               aria-label="Event Type"
               aria-required="true"
               required
+              className="edit-event-input"
             ></input>
-            <label htmlFor="price">Price (£):</label>
+            <label htmlFor="price" className="edit-event-label">
+              Price (£):
+            </label>
             <input
               id="price"
               name="price"
@@ -221,15 +266,21 @@ const StaffEventDetailPage = () => {
               aria-label="Event Price"
               aria-required="true"
               required
+              className="edit-event-input"
             ></input>
           </form>
           <button
             onClick={handleSaveAndUpdateEvent}
             aria-label="Save event button"
+            className="staff-button"
           >
             Save
           </button>
-          {message && <p aria-live="polite">{message}</p>}
+          {message && (
+            <p aria-live="polite" className="staff-message">
+              {message}
+            </p>
+          )}
         </>
       )}
       <Footer />
