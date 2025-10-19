@@ -46,19 +46,22 @@ Notifications throughout the app
 
 📁 Project Structure
 
+📁 Project Structure
+
 evnt5/
 ├─ src/
-│  ├─ components/        # React components (EventCard, UserNavbar, Footer)
-│  ├─ css/               # Stylesheets
-│  ├─ firebase/          # Firebase config & Firestore helpers
-│  ├─ utils/             # Utility functions (e.g., convertDateAndTime)
-│  └─ pages/             # Page components (UserEventDetailsPage, StaffEventPage)
-├─ functions/            # Firebase Cloud Functions (Google Calendar, Stripe, etc.)
-├─ dist/                 # Build output for Firebase hosting
-├─ public/
-├─ firebase.json
-├─ package.json
-└─ README.md
+│  ├─ components/    # React components (EventCard, UserNavbar, Footer)
+│  ├─ css/           # Stylesheets
+│  ├─ firebase/      # Firebase config & Firestore helpers
+│  ├─ utils/         # Utility functions (e.g., convertDateAndTime)
+│  └─ pages/         # Page components (UserEventDetailsPage, StaffEventPage)
+├─ functions/        # Firebase Cloud Functions (Google Calendar, Stripe, etc.)
+├─ dist/             # Build output for Firebase hosting
+├─ public/           # Public static files
+├─ firebase.json     # Firebase configuration
+├─ package.json      # Project metadata & dependencies
+└─ README.md         # Project documentation
+
 
 ---
 
