@@ -1,0 +1,47 @@
+.my-events-section {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 2rem;
+  align-items: center;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+.my-event-title {
+  font-family: "Chromium One", sans-serif;
+  font-size: 2.5rem;
+  color: #f5f4f7;
+  text-shadow: 0.0625rem 0.0625rem 0 #8f07dd,
+    0.125rem 0.125rem 0.1875rem rgba(130, 14, 184, 0.2);
+  letter-spacing: 0.05em;
+  text-align: center;
+  justify-content: center;
+}
+
+.my-events-loading {
+  color: white;
+  font-size: 1.1rem;
+  margin: 1rem 0;
+}
+
+.my-events-error {
+  color: red;
+  font-size: 1.1rem;
+  margin: 1rem 0;
+}
+
+.my-events-message {
+  color: white;
+  font-size: 1.1rem;
+  margin: 1rem 0;
+}
+
+.my-events-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+  width: 100%;
+  max-width: 60rem;
+  box-sizing: border-box;
+}
