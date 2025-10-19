@@ -55,12 +55,37 @@ const PaymentForm = ({ amountPounds, currency = "gbp", onPaymentSuccess }) => {
     }
   };
   return (
-    <form onSubmit={handlePay}>
+    <form onSubmit={handlePay} className="payment-page-form">
       <div aria-label="Credit or Debt card input">
-        <CardElement />
+        <CardElement
+          options={{
+            style: {
+              base: {
+                color: "white",
+                fontSize: "1rem",
+                fontStyle: "italic",
+                "::placeholder": {
+                  color: "rgba(255,255,0.6)",
+                },
+              },
+
+              invalid: {
+                color: "red",
+              },
+            },
+          }}
+        />
       </div>
-      {error && <p role="alert">{error}</p>}
-      <button type="submit" disabled={!stripe || loading}>
+      {error && (
+        <p role="alert" className="payment-page-error">
+          {error}
+        </p>
+      )}
+      <button
+        type="submit"
+        disabled={!stripe || loading}
+        className="payment-page-button"
+      >
         {loading ? "Processing" : "Pay"}
       </button>
     </form>

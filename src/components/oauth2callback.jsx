@@ -94,7 +94,11 @@ const OAuth2Callback = () => {
   }, []);
   return (
     <div>
-      {loading && <p>Processing google calendar authorization...</p>}
+      {loading && (
+        <p style={{ color: "white" }}>
+          Processing google calendar authorization...
+        </p>
+      )}
       {error && (
         <p role="alert" aria-live="assertive" style={{ color: "red" }}>
           {error}
