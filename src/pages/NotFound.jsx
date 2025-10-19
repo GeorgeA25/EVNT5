@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { auth } from "../firebase/firebaseConfig";
+import "../css/NotFoundPage.css";
 
 const NotFoundPage = () => {
   const navigate = useNavigate();
@@ -19,11 +20,13 @@ const NotFoundPage = () => {
   };
   return (
     <section>
-      <p>
+      <p className="not-found-message">
         Oops this page doesn't exist. Please click the button to take you back
         to the home page
       </p>
-      <button onClick={handleNotFoundPage}>Home Page</button>
+      <button onClick={handleNotFoundPage} className="not-found-button">
+        Home Page
+      </button>
     </section>
   );
 };
