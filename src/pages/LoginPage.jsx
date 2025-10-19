@@ -1,12 +1,14 @@
-import React from "react";
 import LoginForm from "../components/LoginForm.jsx";
+import "../css/LoginPage.css";
 
 const LoginPage = () => {
   return (
-    <section>
-      <h1>Welcome to EVNT5 platform</h1>
-      <LoginForm />
-    </section>
+    <>
+      <h1 className="platform-message">Welcome to EVNT5 platform</h1>
+      <section>
+        <LoginForm />
+      </section>
+    </>
   );
 };
 
