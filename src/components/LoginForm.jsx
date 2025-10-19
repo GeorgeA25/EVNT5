@@ -237,7 +237,7 @@ const LoginForm = () => {
   };
 
   return (
-    <section>
+    <section className="login-section">
       <div className="login-box user">
         <div className="login-container">
           <h1 className="login-title"> User Login/Register</h1>
