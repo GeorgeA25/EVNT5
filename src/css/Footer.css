@@ -1,0 +1,10 @@
+.footer-button {
+  padding: 0.625rem;
+  border-radius: 0.375rem;
+  border: 0.0625rem solid #d50fe7;
+  background-color: black;
+  color: white;
+  font-size: 0.875rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
