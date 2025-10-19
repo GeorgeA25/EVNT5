@@ -49,7 +49,7 @@ const StaffNavbar = ({ onloggingOut }) => {
 
     try {
       await deleteStaffFromFirestore(staff.uid);
-      await signOut(staff);
+      await signOut(auth);
       setDeleteMessage(
         "Account has been deleted. Redirecting to login page..."
       );
