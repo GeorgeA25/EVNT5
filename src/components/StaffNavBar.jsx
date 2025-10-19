@@ -66,21 +66,31 @@ const StaffNavbar = ({ onloggingOut }) => {
   return (
     <nav>
       <div>
-        <button onClick={() => setIsDroppedDown(!isDroppedDown)}>
+        <button
+          onClick={() => setIsDroppedDown(!isDroppedDown)}
+          className="staff-navbar"
+        >
           Profile
         </button>
         {isDroppedDown && (
           <div>
-            <button onClick={handleLogout}>Log out</button>
+            <button onClick={handleLogout} className="staff-navbar">
+              Log out
+            </button>
             <br />
-            <button onClick={handleDeleteAccount}> Delete Account</button>
+            <button onClick={handleDeleteAccount} className="staff-navbar">
+              {" "}
+              Delete Account
+            </button>
             <br />
-            <button onClick={handleGoBackToStaffPage}>Home Page</button>
+            <button onClick={handleGoBackToStaffPage} className="staff-navbar">
+              Home Page
+            </button>
           </div>
         )}
       </div>
-      {logOutMessage && <p>{logOutMessage}</p>}
-      {deleteMessage && <p>{deleteMessage}</p>}
+      {logOutMessage && <p className="staff-navbar-loading">{logOutMessage}</p>}
+      {deleteMessage && <p className="staff-navbar-delete">{deleteMessage}</p>}
     </nav>
   );
 };

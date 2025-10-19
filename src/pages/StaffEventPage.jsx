@@ -8,6 +8,9 @@ import { useNavigate } from "react-router-dom";
 import EventCard from "../components/EventCard";
 import StaffNavbar from "../components/StaffNavBar";
 import Footer from "../components/Footer";
+import "../css/StaffDashboardPage.css";
+import "../css/Footer.css";
+import "../css/Navbar.css";
 
 const StaffEventPage = () => {
   const [events, setEvents] = useState([]);
@@ -44,13 +47,14 @@ const StaffEventPage = () => {
   };
 
   return (
-    <section>
-      <h1>Welcome to the Staff Dashbaord</h1>
+    <section className="staff-dashboard-section">
+      <h1 className="staff-title">Staff Dashbaord</h1>
       <StaffNavbar />
-      <br />
-      <button onClick={handleCreateEvent}>Create New Event</button>
-      {loading && <p>Loading evnt5...</p>}
-      {error && <p>{error}</p>}
+      <button onClick={handleCreateEvent} className="staff-button">
+        Create New Event
+      </button>
+      {loading && <p className="staff-loading">Loading evnt5...</p>}
+      {error && <p className="staff-error">{error}</p>}
       {!loading && !error && events.length === 0 && (
         <p>
           No events avaliable at the moment. Please create an event to display
@@ -58,7 +62,7 @@ const StaffEventPage = () => {
         </p>
       )}
       {!loading && !error && events.length > 0 && (
-        <div>
+        <div className="staff-list">
           {events.map((event) => (
             <EventCard
               key={event.id}
