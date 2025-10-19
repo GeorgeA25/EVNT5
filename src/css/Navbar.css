@@ -1,0 +1,39 @@
+.user-navbar {
+  padding: 0.625rem;
+  border-radius: 0.375rem;
+  border: 0.0625rem solid #555;
+  background-color: black;
+  color: white;
+  font-size: 0.875rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  border-color: orange;
+  cursor: pointer;
+}
+
+.user-navbar-loading {
+  color: white;
+}
+
+.user-navbar-delete {
+  color: red;
+}
+
+.staff-navbar {
+  padding: 0.625rem;
+  border-radius: 0.375rem;
+  border: 0.0625rem solid #555;
+  background-color: black;
+  color: white;
+  font-size: 0.875rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  border-color: purple;
+  cursor: pointer;
+}
+
+.staff-navbar-loading {
+  color: white;
+}
+
+.staff-navbar-delete {
+  color: red;
+}
