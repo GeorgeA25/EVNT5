@@ -1,6 +1,6 @@
 import React from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
-//import "./App.css";
+import "./App.css";
 import LoginPage from "./pages/LoginPage";
 import StaffEventPage from "./pages/StaffEventPage";
 import CreateEventPage from "./pages/CreateEventPage";
