@@ -14,13 +14,13 @@ Only users who log in via the google login in butoon can add events to a Google 
 
 To log into the app via staff, You'll need an email address that ends with @evnt5.com to register as a staff member.
 
-Upon signing up to a paid event you'll be navigated to a payment page. Because no real money is being exchnaged nad because strip is in test mode, youll have to use these numbers
+Upon signing up to a paid event you'll be navigated to a payment page. Because no real money is being exchanged and because Stripe is in test mode, youll have to use these numbers
 
 Card Number- 4242 4242 4242 4242
 
 cvc- any date can be used aslong as it is a date that is pass the event date you have signed up for.
 
-then the next 3 digit number you can pass in 123 and for the zip code you can pass in 12345.
+then the 3 digit number you can pass in is 123 and for the zip code you can pass in 12345.
 
 ---
 
