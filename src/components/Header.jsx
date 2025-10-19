@@ -1,6 +1,6 @@
-import React from "react";
+import "../css/Header.css";
 
 const Header = () => {
-  return <h1>EVNT5</h1>;
+  return <h1 className="header">EVNT5</h1>;
 };
 export default Header;

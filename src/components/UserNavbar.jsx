@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { signOut } from "firebase/auth";
 import { auth } from "../firebase/firebaseConfig";
 import { deleteUsersFromFirestore } from "../firebase/firebaseStore";
+import "../css/Navbar.css";
 
 const UserNavbar = ({ onLoggingOut }) => {
   const [isDroppedDown, setIsDroppedDown] = useState(false);
@@ -70,23 +71,35 @@ const UserNavbar = ({ onLoggingOut }) => {
   return (
     <nav>
       <div>
-        <button onClick={() => setIsDroppedDown(!isDroppedDown)}>
+        <button
+          onClick={() => setIsDroppedDown(!isDroppedDown)}
+          className="user-navbar"
+        >
           Profile
         </button>
         {isDroppedDown && (
           <div>
-            <button onClick={handleLogout}>Log out</button>
+            <button onClick={handleLogout} className="user-navbar">
+              Log out
+            </button>
             <br />
-            <button onClick={handleDeleteAccount}> Delete Account</button>
+            <button onClick={handleDeleteAccount} className="user-navbar">
+              {" "}
+              Delete Account
+            </button>
             <br />
-            <button onClick={handleGoBackToEvents}>Home Page</button>
+            <button onClick={handleGoBackToEvents} className="user-navbar">
+              Home Page
+            </button>
             <br />
-            <button onClick={handleMyEvents}>My Events</button>
+            <button onClick={handleMyEvents} className="user-navbar">
+              My Events
+            </button>
           </div>
         )}
       </div>
-      {logOutMessage && <p>{logOutMessage}</p>}
-      {deleteMessage && <p>{deleteMessage}</p>}
+      {logOutMessage && <p className="user-nav-logout">{logOutMessage}</p>}
+      {deleteMessage && <p className="user-nav-delete">{deleteMessage}</p>}
     </nav>
   );
 };
