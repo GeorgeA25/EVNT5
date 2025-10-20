@@ -104,6 +104,10 @@ VITE_GOOGLE_CLIENT_ID=your_google_client_id
 VITE_EMAILJS_SERVICE_ID=your_emailjs_service_id
 VITE_EMAILJS_TEMPLATE_ID=your_emailjs_template_id
 VITE_EMAILJS_PUBLIC_KEY=your_emailjs_public_key
+VITE_GOOGLE_CLIENT_SECRET=your_google_client_secret
+VITE_STRIPE_PUBLISHABLE_KEY=your_stripe_publishable_key
+STRIPE_SECRET_KEY=your_stripe_secret_key
+
 
 Also note that you should store the .env file inside the .gitignore file for privacy
 
