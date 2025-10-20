@@ -10,7 +10,7 @@ A web application that lets a users to browse events, sign up for them, pay for 
 
 Notes
 
-Only users who log in via the google login in butoon can add events to a Google Calendar due to authentication requirements, users who log in via email/password will only be able to sign up to events and pay if required
+Only users who log in via the google login in button can add events to a Google Calendar due to authentication requirements, users who log in via email/password will only be able to sign up to events and pay if required
 
 To log into the app via staff, You'll need an email address that ends with @evnt5.com to register as a staff member.
 
