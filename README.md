@@ -24,6 +24,8 @@ cvc number you can use 123
  
 zip code you can pass in 12345.
 
+Any changes made to the cloud functions will have to be redeployed to take affect. Once saving the cloud function, run the in the terminal. firebase deploy --only functions
+
 ---
 
 🚀 Tech Stack
