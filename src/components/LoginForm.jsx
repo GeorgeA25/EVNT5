@@ -26,12 +26,22 @@ const LoginForm = () => {
   const [staffRegisterEmail, setStaffRegisterEmail] = useState("");
   const [staffRegisterPassword, setStaffRegisterPassword] = useState("");
 
-  const [loginLoadingMessage, setLoginLoadingMessage] = useState(false);
+  const [userLoginLoadingMessage, setUserLoginLoadingMessage] = useState(false);
+  const [staffLoginLoadingMessage, setStaffLoginLoadingMessage] =
+    useState(false);
+  const [userLoginErrorMessage, setUserLoginErrorMessage] = useState(null);
+  const [staffLoginErrorMessage, setStaffLoginErrorMessage] = useState(null);
   const [loginErrorMessage, setLoginErrorMessage] = useState(null);
 
   const [registering, setRegistering] = useState(false);
-  const [registerLoadingMessage, setRegisterLoadingMessage] = useState(false);
-  const [registerErrorMessage, setRegisterErrorMessage] = useState(null);
+  const [userRegisterLoadingMessage, setUserRegisterLoadingMessage] =
+    useState(false);
+  const [staffRegisterLoadingMessage, setStaffRegisterLoadingMessage] =
+    useState(false);
+  const [userRegisterErrorMessage, setUserRegisterErrorMessage] =
+    useState(null);
+  const [staffRegisterErrorMessage, setStaffRegisterErrorMessage] =
+    useState(null);
   const [googleLoginLoading, setGoogleLoginLoading] = useState(false);
 
   const [userFormErrorMessage, setUserFormErrorMessage] = useState("");
@@ -62,8 +72,8 @@ const LoginForm = () => {
 
   const handleUserEmailLogin = async (e) => {
     e.preventDefault();
-    setLoginLoadingMessage(true);
-    setLoginErrorMessage(null);
+    setUserLoginLoadingMessage(true);
+    setUserLoginErrorMessage(null);
     setIsUserLoggingIn(true);
 
     try {
@@ -74,6 +84,8 @@ const LoginForm = () => {
         setTimeout(() => {
           setUserFormErrorMessage(null);
         }, 4000);
+        setUserLoginLoadingMessage(false);
+        setIsUserLoggingIn(false);
         return;
       }
       const user = await emailLogin(userEmail, userPassword);
@@ -84,20 +96,20 @@ const LoginForm = () => {
       navigate("/events");
     } catch (error) {
       const errorMessage = handleAuthentificationError(error.code);
-      setLoginErrorMessage(errorMessage);
+      setUserLoginErrorMessage(errorMessage);
       setTimeout(() => {
-        setLoginErrorMessage(null);
+        setUserLoginErrorMessage(null);
       }, 4000);
     } finally {
-      setLoginLoadingMessage(false);
+      setUserLoginLoadingMessage(false);
       setIsUserLoggingIn(false);
     }
   };
 
   const handleStaffEmailLogin = async (e) => {
     e.preventDefault();
-    setLoginLoadingMessage(true);
-    setLoginErrorMessage(null);
+    setStaffLoginLoadingMessage(true);
+    setStaffLoginErrorMessage(null);
     setIsUserLoggingIn(true);
 
     try {
@@ -108,6 +120,8 @@ const LoginForm = () => {
         setTimeout(() => {
           setStaffFormErrorMessage(null);
         }, 4000);
+        setStaffLoginLoadingMessage(false);
+        setIsUserLoggingIn(false);
         return;
       }
       const user = await emailLogin(staffEmail, staffPassword);
@@ -118,12 +132,12 @@ const LoginForm = () => {
       navigate("/staff-dashboard");
     } catch (error) {
       const errorMessage = handleAuthentificationError(error.code);
-      setLoginErrorMessage(errorMessage);
+      setStaffLoginErrorMessage(errorMessage);
       setTimeout(() => {
-        setLoginErrorMessage(null);
+        setStaffLoginErrorMessage(null);
       }, 4000);
     } finally {
-      setLoginLoadingMessage(false);
+      setStaffLoginLoadingMessage(false);
       setIsUserLoggingIn(false);
     }
   };
@@ -159,8 +173,8 @@ const LoginForm = () => {
 
   const handleUserRegister = async (e) => {
     e.preventDefault();
-    setRegisterLoadingMessage(true);
-    setRegisterErrorMessage(null);
+    setUserRegisterLoadingMessage(true);
+    setUserRegisterErrorMessage(null);
     setRegistering(true);
 
     try {
@@ -171,6 +185,8 @@ const LoginForm = () => {
         setTimeout(() => {
           setUserFormErrorMessage(null);
         }, 4000);
+        setUserRegisterLoadingMessage(false);
+        setRegistering(false);
         return;
       }
       const user = await registerUser(userRegisterEmail, userRegisterPassword);
@@ -180,25 +196,25 @@ const LoginForm = () => {
         email: userRegisterEmail,
       });
       navigate("/events");
-      setUserEmail("");
-      setUserPassword("");
+      setUserRegisterEmail("");
+      setUserRegisterPassword("");
     } catch (error) {
       console.error(error);
       const errorMessage = handleAuthentificationError(error.code);
-      setRegisterErrorMessage(errorMessage);
+      setUserRegisterErrorMessage(errorMessage);
       setTimeout(() => {
-        setRegisterErrorMessage(null);
+        setUserRegisterErrorMessage(null);
       }, 4000);
     } finally {
-      setRegisterLoadingMessage(false);
+      setUserRegisterLoadingMessage(false);
       setRegistering(false);
     }
   };
 
   const handleStaffRegister = async (e) => {
     e.preventDefault();
-    setRegisterLoadingMessage(true);
-    setRegisterErrorMessage(null);
+    setStaffRegisterLoadingMessage(true);
+    setStaffRegisterErrorMessage(null);
     setRegistering(true);
 
     try {
@@ -209,6 +225,8 @@ const LoginForm = () => {
         setTimeout(() => {
           setStaffFormErrorMessage(null);
         }, 4000);
+        setStaffRegisterLoadingMessage(false);
+        setRegistering(false);
         return;
       }
       const user = await registerUser(
@@ -226,12 +244,12 @@ const LoginForm = () => {
     } catch (error) {
       console.error(error);
       const errorMessage = handleAuthentificationError(error.code);
-      setRegisterErrorMessage(errorMessage);
+      setStaffRegisterErrorMessage(errorMessage);
       setTimeout(() => {
-        setRegisterErrorMessage(null);
+        setStaffRegisterErrorMessage(null);
       }, 4000);
     } finally {
-      setRegisterLoadingMessage(false);
+      setStaffRegisterLoadingMessage(false);
       setRegistering(false);
     }
   };
