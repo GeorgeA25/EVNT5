@@ -240,7 +240,7 @@ const LoginForm = () => {
     <section className="login-section">
       <div className="login-box user">
         <div className="login-container">
-          <h1 className="login-title"> User Login/Register</h1>
+          <h1 className="login-title"> User Login</h1>
           {loginLoadingMessage && (
             <p aria-live="polite" className="login-loading">
               {" "}
@@ -292,7 +292,7 @@ const LoginForm = () => {
               {registering ? "Logging in..." : "Login"}
             </button>
           </form>
-
+          <h1 className="login-title">User Registration</h1>
           {registerLoadingMessage && (
             <p aria-live="polite" className="login-loading">
               loading, please wait...
@@ -362,7 +362,7 @@ const LoginForm = () => {
       </div>
       <div className="login-box staff">
         <div className="login-container">
-          <h1 className="login-title"> Staff Login/Register</h1>
+          <h1 className="login-title"> Staff Login</h1>
           {loginLoadingMessage && (
             <p aria-live="polite" className="login-loading">
               {" "}
@@ -420,7 +420,7 @@ const LoginForm = () => {
               {registering ? "Logging in..." : "Login"}
             </button>
           </form>
-
+          <h1 className="login-title"> Staff Registartion</h1>
           {registerLoadingMessage && (
             <p aria-live="polite" className="login-loading">
               loading, please wait...
