@@ -259,21 +259,21 @@ const LoginForm = () => {
       <div className="login-box user">
         <div className="login-container">
           <h1 className="login-title"> User Login</h1>
-          {loginLoadingMessage && (
+          {userLoginLoadingMessage && (
             <p aria-live="polite" className="login-loading">
               {" "}
-              Loading login/registration page, please wait...
+              Logging in, please wait...
             </p>
           )}
-          {loginErrorMessage && (
+          {userLoginErrorMessage && (
             <p id="userLoginError" role="alert" className="login-error">
-              {loginErrorMessage}
+              {userLoginErrorMessage}
             </p>
           )}
 
           <form
             onSubmit={handleUserEmailLogin}
-            aria-busy={loginLoadingMessage}
+            aria-busy={userLoginLoadingMessage}
             className="login-form"
           >
             <label htmlFor="user-email" className="login-label">
@@ -304,26 +304,26 @@ const LoginForm = () => {
 
             <button
               type="submit"
-              disabled={loginLoadingMessage}
+              disabled={userLoginLoadingMessage}
               className="login-button"
             >
               {registering ? "Logging in..." : "Login"}
             </button>
           </form>
           <h1 className="login-title">User Registration</h1>
-          {registerLoadingMessage && (
+          {userRegisterLoadingMessage && (
             <p aria-live="polite" className="login-loading">
-              loading, please wait...
+              Registering account, please wait...
             </p>
           )}
-          {registerErrorMessage && (
+          {userRegisterErrorMessage && (
             <p
               id="userRegisterError"
               role="alert"
               aria-live="assertive"
               className="register-error"
             >
-              {registerErrorMessage || ""}
+              {userRegisterErrorMessage || ""}
             </p>
           )}
           {userFormErrorMessage && (
@@ -370,7 +370,7 @@ const LoginForm = () => {
             />
             <button
               type="submit"
-              disabled={registerLoadingMessage || registering}
+              disabled={userRegisterLoadingMessage || registering}
               className="login-button"
             >
               {registering ? "Registering..." : "Register"}
@@ -381,27 +381,27 @@ const LoginForm = () => {
       <div className="login-box staff">
         <div className="login-container">
           <h1 className="login-title"> Staff Login</h1>
-          {loginLoadingMessage && (
+          {staffLoginLoadingMessage && (
             <p aria-live="polite" className="login-loading">
               {" "}
-              Loading login/registration page, please wait...
+              Logging in, please wait...
             </p>
           )}
-          {loginErrorMessage && (
+          {staffLoginErrorMessage && (
             <p
               id="staffLoginError"
               role="alert"
               aria-live="assertive"
               className="login-error"
             >
-              {loginErrorMessage}
+              {staffLoginErrorMessage}
             </p>
           )}
 
           <form
             onSubmit={handleStaffEmailLogin}
             aria-describedby="staffLoginError"
-            aria-busy={loginLoadingMessage}
+            aria-busy={staffLoginLoadingMessage}
             className="login-form"
           >
             <label htmlFor="staff-email" className="login-label">
@@ -432,26 +432,26 @@ const LoginForm = () => {
 
             <button
               type="submit"
-              disabled={loginLoadingMessage}
+              disabled={staffLoginLoadingMessage}
               className="login-button"
             >
               {registering ? "Logging in..." : "Login"}
             </button>
           </form>
           <h1 className="login-title"> Staff Registartion</h1>
-          {registerLoadingMessage && (
+          {staffRegisterLoadingMessage && (
             <p aria-live="polite" className="login-loading">
               loading, please wait...
             </p>
           )}
-          {registerErrorMessage && (
+          {staffRegisterErrorMessage && (
             <p
               id="staffRegisterError"
               role="alert"
               aria-live="assertive"
               className="login-error"
             >
-              {registerErrorMessage || ""}
+              {staffRegisterErrorMessage || ""}
             </p>
           )}
           {staffFormErrorMessage && (
@@ -498,7 +498,7 @@ const LoginForm = () => {
             />
             <button
               type="submit"
-              disabled={registerLoadingMessage || registering}
+              disabled={staffRegisterLoadingMessage || registering}
               className="login-button"
             >
               {registering ? "Registering..." : "Register"}
