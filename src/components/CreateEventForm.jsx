@@ -196,6 +196,7 @@ const EventForm = () => {
           required
           aria-invalid={inputErrors.date ? "true" : "false"}
           aria-describedby={inputErrors.date ? "date-error" : ""}
+          min={new Date().toISOString().split("T")[0]}
           className="create-event-input"
         />
         {inputErrors.date && (
@@ -213,6 +214,7 @@ const EventForm = () => {
           value={event.type}
           onChange={handleChange}
           required
+          placeholder="e.g., Tech Meetup, Movie Night"
           aria-invalid={inputErrors.type ? "true" : "false"}
           aria-describedby={inputErrors.type ? "type-error" : ""}
           className="create-event-input"
