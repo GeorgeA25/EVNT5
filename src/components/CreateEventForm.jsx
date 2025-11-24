@@ -85,6 +85,12 @@ const EventForm = () => {
       }
     }
 
+    if (event.price !== "" && event.price < 0) {
+      errors.price =
+        "Price for an event cannot be negative. Input a positive number";
+      valid = false;
+    }
+
     setInputErrors(errors);
     return valid;
   };
@@ -112,7 +118,9 @@ const EventForm = () => {
         endTime: "",
         price: "",
       });
-      setSuccessMessage("Event was created successfully");
+      setSuccessMessage(
+        "Event was created successfully. Navigating back to your dashboard..."
+      );
     } catch (error) {
       console.error("Error whilst creating event", error);
       setError(
