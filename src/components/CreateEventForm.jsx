@@ -74,6 +74,17 @@ const EventForm = () => {
       }
     });
 
+    if (event.startTime && event.endTime) {
+      const start = new Date(`${event.date}T${event.startTime}`);
+      const end = new Date(`${event.date}T${event.endTime}`);
+
+      if (end <= start) {
+        errors.endTime =
+          "End time for creating an event must be after event's created start time";
+        valid = false;
+      }
+    }
+
     setInputErrors(errors);
     return valid;
   };
@@ -121,6 +132,15 @@ const EventForm = () => {
       return () => clearTimeout(timer);
     }
   }, [successMessage, navigate]);
+
+  useEffect(() => {
+    if (Object.keys(inputErrors).length > 0) {
+      const timer = setTimeout(() => {
+        setInputErrors({});
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  });
 
   return (
     <section className="create-event-section">
@@ -263,7 +283,7 @@ const EventForm = () => {
           </span>
         )}
         <label htmlFor="price" className="create-event-label">
-          Event price:
+          Event price(£):
         </label>
         <input
           type="number"
