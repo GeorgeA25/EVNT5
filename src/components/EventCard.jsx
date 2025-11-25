@@ -1,7 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import "../css/EventCard.css";
 
-const EventCard = ({ event, clickable = true, basePath = "/events" }) => {
+const EventCard = ({
+  event,
+  clickable = true,
+  basePath = "/events",
+  onSignOut,
+}) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -20,6 +25,11 @@ const EventCard = ({ event, clickable = true, basePath = "/events" }) => {
       <p>Startime: {event.startTime}</p>
       <p>Endtime: {event.endTime}</p>
       <p>Price(£): {event.price}</p>
+      {onSignOut && (
+        <button className="signout-button" onClick={handleSignOutClick}>
+          Sign out of Event
+        </button>
+      )}
     </div>
   );
 };
