@@ -3,6 +3,7 @@ import { auth } from "../firebase/firebaseConfig";
 import {
   getSignedUpEventsByUserEmail,
   getEventsById,
+  removeUserFromEvent,
 } from "../firebase/firebaseStore";
 import EventCard from "../components/EventCard";
 import UserNavbar from "../components/UserNavbar";
@@ -14,6 +15,7 @@ const MyEventsPage = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [user, setUser] = useState(null);
+  const [message, setMessage] = useState(null);
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (firebaseUser) => {
@@ -43,6 +45,28 @@ const MyEventsPage = () => {
     return () => unsubscribe();
   }, []);
 
+  const handleSignOutOfEvent = async (eventId) => {
+    if (!user) return;
+
+    const confirmSignOut = window.confirm(
+      "Are you sure you want to sign out of this event."
+    );
+    if (!confirmSignOut) return;
+
+    try {
+      await removeUserFromEvent(eventId, user.email);
+      setEvents((preEvent) => preEvent.filter((e) => e.id !== eventId));
+
+      setMessage("You've successfully signed out of this event!");
+      setTimeout(() => setMessage(null), 5000);
+    } catch (error) {
+      setMessage(
+        "There was an error removing you from this event. Please try again"
+      );
+      setTimeout(() => setMessage(null), 5000);
+    }
+  };
+
   return (
     <>
       <section className="my-events-section">
@@ -58,6 +82,11 @@ const MyEventsPage = () => {
             {error}
           </p>
         )}
+        {message && (
+          <p role="polite" className="my-events-loading">
+            {message}
+          </p>
+        )}
         {events.length === 0 && !loading && (
           <p role="alert" className="my-events-message">
             You havent signed up to any events yet
@@ -65,7 +94,12 @@ const MyEventsPage = () => {
         )}
         <div className="my-events-list">
           {events.map((event) => (
-            <EventCard key={event.id} event={event} clickable={false} />
+            <EventCard
+              key={event.id}
+              event={event}
+              clickable={false}
+              onSignOut={handleSignOutOfEvent}
+            />
           ))}
         </div>
         <Footer />
