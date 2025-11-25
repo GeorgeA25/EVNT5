@@ -15,6 +15,12 @@ const EventCard = ({
     }
   };
 
+  const handleSignOut = () => {
+    if (onSignOut) {
+      onSignOut(event.id);
+    }
+  };
+
   return (
     <div className="event-card" onClick={handleClick}>
       <h2>{event.title}</h2>
@@ -26,7 +32,7 @@ const EventCard = ({
       <p>Endtime: {event.endTime}</p>
       <p>Price(£): {event.price}</p>
       {onSignOut && (
-        <button className="signout-button" onClick={handleSignOutClick}>
+        <button className="signout-button" onClick={handleSignOut}>
           Sign out of Event
         </button>
       )}
