@@ -327,8 +327,6 @@ const UserEventDetailsPage = () => {
                   Copy Event URL
                 </button>
               </div>
-              {message && <p className="event-message">{message}</p>}
-              {error && <p className="event-error">{error}</p>}
               <div>
                 {googleUser && (
                   <div>
