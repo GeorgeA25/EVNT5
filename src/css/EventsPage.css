@@ -29,9 +29,8 @@
 .events-list {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
-  justify-content: center;
   justify-items: center;
-  align-items: start;
+  align-items: stretch;
   gap: 2rem;
   width: 100%;
   max-width: 60rem;

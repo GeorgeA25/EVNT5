@@ -28,12 +28,11 @@
 .staff-list {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
-  justify-content: center;
   justify-items: center;
+  align-items: stretch;
   gap: 2rem;
   width: 100%;
   max-width: 60rem;
-  margin: 0 auto;
   padding: 1rem;
   box-sizing: border-box;
 }
