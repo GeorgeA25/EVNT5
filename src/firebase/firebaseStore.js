@@ -375,3 +375,23 @@ export const updateEventById = async (eventId, updatedData) => {
     throw error;
   }
 };
+
+export const removeUserFromEvent = async (eventId, email) => {
+  try {
+    const signedUpRef = collection(db, "eventSignedUp");
+    const q = query(
+      signedUpRef,
+      where("eventId", "==", eventId),
+      where("email", "==", email)
+    );
+    const querySnapshot = await getDocs(q);
+
+    querySnapshot.forEach(async (doc) => {
+      await deleteDoc(doc.ref);
+      console.log(`User removed from event: ${doc.id}`);
+    });
+  } catch (error) {
+    console.error("Error whilst removing user from event", error);
+    throw error;
+  }
+};
