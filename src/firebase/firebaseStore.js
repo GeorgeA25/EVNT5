@@ -92,7 +92,7 @@ export const addSignedUpEvents = async (user, eventId) => {
       throw new Error("User not authenticated");
     }
 
-    const displayName = user.displayName || user.email.split("@")[0];
+    const displayName = user.name;
     const eventRef = collection(db, "eventSignedUp");
     await addDoc(eventRef, {
       eventId: eventId,
