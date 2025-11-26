@@ -303,6 +303,7 @@ const EventForm = () => {
           aria-invalid={inputErrors.price ? "true" : "false"}
           aria-describedby={inputErrors.price ? "price-error" : ""}
           className="create-event-input"
+          max={100}
         />
         {inputErrors.price && (
           <span id="price-error" className="create-event-form-error">
