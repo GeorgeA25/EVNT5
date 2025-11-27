@@ -57,6 +57,8 @@ const MyEventsPage = () => {
       await removeUserFromEvent(eventId, user.email);
       setEvents((preEvent) => preEvent.filter((e) => e.id !== eventId));
 
+      localStorage.removeItem(`${user.uid}_eventAdded_${eventId}`);
+
       setMessage("You've successfully signed out of this event!");
       setTimeout(() => setMessage(null), 5000);
     } catch (error) {
