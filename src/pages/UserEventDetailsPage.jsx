@@ -86,15 +86,16 @@ const UserEventDetailsPage = () => {
   }, [eventId]);
 
   useEffect(() => {
+    if (!user) return;
     const connected = localStorage.getItem("googleCalendarConnected");
-    const added = localStorage.getItem(`eventAdded_${eventId}`);
+    const added = localStorage.getItem(`${user.uid}_eventAdded_${eventId}`);
     if (connected === "true") {
       setCalendarConnected(true);
     }
     if (added === "true") {
       setEventAdded(true);
     }
-  }, []);
+  }, [eventId, user]);
 
   const handleSignUp = async (e) => {
     e.preventDefault();
@@ -204,7 +205,7 @@ const UserEventDetailsPage = () => {
         );
       }
       setEventAdded(true);
-      localStorage.setItem(`eventAdded_${eventId}`, "true");
+      localStorage.setItem(`${user.uid}_eventAdded_${eventId}`, "true");
       setMessage("Event successfuly added to your google calendar");
     } catch (error) {
       setError(error.message);
