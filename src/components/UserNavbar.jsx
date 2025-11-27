@@ -15,6 +15,12 @@ const UserNavbar = ({ onLoggingOut }) => {
   const handleLogout = async () => {
     setIsDroppedDown(true);
     try {
+      localStorage.removeItem("googleCalendarConnected");
+
+      Object.keys(localStorage)
+        .filter((key) => key.startsWith("eventAdded_"))
+        .forEach((key) => localStorage.removeItem(key));
+
       if (onLoggingOut) {
         onLoggingOut();
       }
