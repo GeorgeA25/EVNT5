@@ -347,7 +347,7 @@ const LoginForm = () => {
             <input
               type="email"
               id="user-email-register"
-              placeholder="please enter email"
+              placeholder="please enter your email"
               value={userRegisterEmail}
               className="login-input"
               onChange={(e) => setUserRegisterEmail(e.target.value)}
@@ -360,7 +360,7 @@ const LoginForm = () => {
             <input
               type="password"
               id="user-password-register"
-              placeholder="please enter password"
+              placeholder="please enter your password"
               value={userRegisterPassword}
               className="login-input"
               onChange={(e) => setUserRegisterPassword(e.target.value)}
@@ -410,7 +410,7 @@ const LoginForm = () => {
             <input
               type="email"
               id="staff-email"
-              placeholder="Please enter your email"
+              placeholder="Please enter your work email"
               value={staffEmail}
               className="login-input"
               onChange={(e) => setStaffEmail(e.target.value)}
@@ -422,7 +422,7 @@ const LoginForm = () => {
             <input
               type="password"
               id="staff-password"
-              placeholder="Please enter your password"
+              placeholder="Please enter your work password"
               value={staffPassword}
               className="login-input"
               onChange={(e) => setStaffPassword(e.target.value)}
@@ -475,7 +475,7 @@ const LoginForm = () => {
             <input
               type="email"
               id="staff-email-register"
-              placeholder="please enter email"
+              placeholder="please enter your new work email"
               value={staffRegisterEmail}
               className="login-input"
               onChange={(e) => setStaffRegisterEmail(e.target.value)}
@@ -488,7 +488,7 @@ const LoginForm = () => {
             <input
               type="password"
               id="staff-password-register"
-              placeholder="please enter password"
+              placeholder="please enter your new work password"
               value={staffRegisterPassword}
               className="login-input"
               onChange={(e) => setStaffRegisterPassword(e.target.value)}
