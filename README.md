@@ -141,4 +141,8 @@ Sign up for an account with EmailJS then create a service and a template where u
 
 Node.js v20 inside package.json file inside functions folder
 
-📝 Credits EVNT5 created by @GeorgeA25. If you run into any issues or need more details about setting up locally please get in touch.
+---
+
+📝 Credits 
+
+EVNT5 created by @GeorgeA25. If you run into any issues or need more details about setting up locally please get in touch.
