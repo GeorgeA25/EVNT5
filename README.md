@@ -123,7 +123,7 @@ Before running the app locally, you'll need to setup accounts and credentials fo
 
 First signup to firebase and create a project. Upon creating a project inside the settings of project overview, if you scroll down you'll see your firebase config object which you'll need to store inside the .env file. Also you'll need to set up Firestore, Authentication and functions. Also on the authentication page you'll have to enable email/passsword and google login as well.
 
-2.Google API(Google Calendar
+2.Google API(Google Calendar)
 
 First sign up to google cloud console and create a project via this link (https://console.cloud.google.com/). Then on search in search bar for library and select Google Calendar API. You'll need to enable this in order to use. You'll also need to create an OAuth2.0client id where you'll receive some more tokens like id's and a secret key that can be stored in the .env file. Then you'll need to authorize your origins and redirects with your localhost url and save. Bare in mind any URLS that have a hosted website you'll need to change those url to your local host url then firebase deploy --only functions to use them 
 
