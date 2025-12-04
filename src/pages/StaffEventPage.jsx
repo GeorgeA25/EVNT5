@@ -1,8 +1,5 @@
 import { useState, useEffect } from "react";
-import {
-  getUserFromFirestore,
-  getEventsByStaffId,
-} from "../firebase/firebaseStore";
+import { getEventsByStaffId } from "../firebase/firebaseStore";
 import { auth } from "../firebase/firebaseConfig";
 import { useNavigate } from "react-router-dom";
 import EventCard from "../components/EventCard";
