@@ -318,15 +318,20 @@ const UserEventDetailsPage = () => {
                 ></input>
                 <button
                   type="submit"
-                  disabled={loadingSignUp || userSignedUp}
+                  disabled={loadingSignUp || userSignedUp || eventExpired}
                   className="signup-button"
                 >
-                  {userSignedUp
+                  {eventExpired
+                    ? "Event Expired"
+                    : userSignedUp
                     ? "Already signed up"
                     : loadingSignUp
                     ? "Signing Up..."
                     : "Sign Up"}
                 </button>
+                {eventExpired && (
+                  <p className="expired-message">This event has expired.</p>
+                )}
               </form>
 
               <div>
