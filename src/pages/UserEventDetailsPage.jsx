@@ -242,6 +242,12 @@ const UserEventDetailsPage = () => {
     (s) => s.email === auth.currentUser?.email
   );
 
+  const todaysDate = new Date();
+  todaysDate.setHours(0, 0, 0, 0);
+
+  const eventExpired =
+    eventDetails.date && new Date(eventDetails.date) < todaysDate;
+
   if (isLoggingOut) {
     return <p>Logging out. Redirecting you back to login page...</p>;
   }
