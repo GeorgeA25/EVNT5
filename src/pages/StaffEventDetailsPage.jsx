@@ -121,7 +121,7 @@ const StaffEventDetailPage = () => {
         <div aria-label="Staff Event controls" className="staff-controls">
           {!editing ? (
             <button
-              onClick={() => setEditing(true)}
+              onClick={handleEditToggle}
               aria-label="true"
               className="staff-button"
             >
