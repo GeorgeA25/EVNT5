@@ -172,3 +172,8 @@
   color: red;
   font-size: large;
 }
+
+.event-shared-link {
+  color: white;
+  padding-left: 0.5rem;
+}
