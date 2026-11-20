@@ -4,7 +4,7 @@ A web application that lets a users to browse events, sign up for them, pay for 
 
 ---
 
-🌐 Live Demo: (https://evnt5-97cf1.firebaseapp.com/)
+🌐 Live Demo: (https://evnt5-97cf1.web.app/)
 
 ---
 
